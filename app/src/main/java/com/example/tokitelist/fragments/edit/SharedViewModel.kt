@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import com.example.tokitelist.R
+import com.example.tokitelist.data.models.Season
 
 class SharedViewModel(application: Application):AndroidViewModel(application) {
 
@@ -22,6 +23,14 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
 
         override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+    }
+
+    fun seasonToInteger(season: Season): Int {
+        return when(season){
+            Season.winter -> 0
+            Season.summer -> 1
+            Season.always -> 2
+        }
     }
 
     fun verifyDataFromUser(mName: String): Boolean {

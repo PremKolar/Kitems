@@ -10,4 +10,12 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
     suspend fun insertData(kiteItem: KiteItem){
         toKiteDao.insertData(kiteItem)
     }
+
+    fun getKitemByName(name: String): KiteItem? {
+        return toKiteDao.getKitemByName(name)
+    }
+
+    fun deleteData(name: String) {
+                toKiteDao.deleteData(name)
+    }
 }

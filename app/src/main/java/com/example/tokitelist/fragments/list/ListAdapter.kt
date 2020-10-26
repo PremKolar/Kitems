@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tokitelist.MainActivity
 import com.example.tokitelist.R
 import com.example.tokitelist.data.models.KiteItem
 import com.example.tokitelist.data.models.Season
@@ -15,18 +16,22 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<KiteItem>()
 
-    class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+
+
+    class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_layout,parent,false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_layout,parent,false)
+        return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemView.txt_name.text = dataList[position].name
         holder.itemView.row_background.setOnClickListener{
-            holder.itemView.findNavController().navigate(R.id.action_listFragment_to_editFragment)
+            val action = ListFragmentDirections.actionListFragmentToAddFragment(dataList[position])
+            holder.itemView.findNavController().navigate(action)
         }
 
         when (dataList[position].season) {
@@ -43,5 +48,10 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     fun setData(data: List<KiteItem>){
         this.dataList = data
         notifyDataSetChanged()
+    }
+
+    fun deleteItem(activity: MainActivity, listFragment: ListFragment) {
+        activity
+
     }
 }

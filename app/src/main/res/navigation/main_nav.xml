@@ -12,10 +12,11 @@
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_addFragment"
-            app:destination="@id/addFragment" />
-        <action
-            android:id="@+id/action_listFragment_to_editFragment"
-            app:destination="@id/editFragment" />
+            app:destination="@id/addFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -24,15 +25,13 @@
         tools:layout="@layout/fragment_add_item" >
         <action
             android:id="@+id/action_addFragment_to_listFragment"
-            app:destination="@id/listFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/editFragment"
-        android:name="com.example.tokitelist.fragments.edit.EditFragment"
-        android:label="Edit Item"
-        tools:layout="@layout/fragment_edit" >
-        <action
-            android:id="@+id/action_editFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            app:destination="@id/listFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="currentKitem"
+            app:argType="com.example.tokitelist.data.models.KiteItem" />
     </fragment>
 </navigation>

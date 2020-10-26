@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.tokitelist.R
 import com.example.tokitelist.data.models.KiteItem
 import com.example.tokitelist.data.models.Season
@@ -13,13 +14,16 @@ import com.example.tokitelist.data.viewmodel.ToKiteViewModel
 import com.example.tokitelist.fragments.edit.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_add_item.*
 import kotlinx.android.synthetic.main.fragment_add_item.view.*
+import java.lang.Exception
 
 
 class AddItemFragment : Fragment() {
 
+    private var itemExistsAlready: Boolean = false
     private val mToKiteModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
 
+    private val args by navArgs<AddItemFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -30,20 +34,49 @@ class AddItemFragment : Fragment() {
 
         view.spinner_season.onItemSelectedListener = mSharedViewModel.listener
 
+
+        try {
+            view.editText_nameOfItem.setText(args.currentKitem.name)
+            view.spinner_season.setSelection(mSharedViewModel.seasonToInteger(args.currentKitem.season))
+            this.itemExistsAlready = true
+        }catch (e:Exception){
+            this.itemExistsAlready = false
+        }
+
         return view
 
     }
 
+    private fun hideTrashcan(menu: Menu) {
+        if (menu!=null) menu.getItem(0).isVisible = false
+    }
+
+    private fun showTrashcan(menu: Menu) {
+        if (menu!=null) menu.getItem(0).isVisible = true
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.add_fragment_menu, menu)
+        if (itemExistsAlready){
+            showTrashcan(menu)
+        }else{
+            hideTrashcan(menu)
+        }
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_add){
-            addItemToDB()
+        when (item.itemId){
+            R.id.menu_add -> addItemToDB()
+            R.id.menu_delete -> deleteItemFromDB()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteItemFromDB() {
+        val mName = editText_nameOfItem.text.toString()
+        mToKiteModel.deleteData(mName)
+        findNavController().navigate(R.id.action_addFragment_to_listFragment)
     }
 
     private fun addItemToDB() {
@@ -53,12 +86,27 @@ class AddItemFragment : Fragment() {
             Toast.makeText(requireContext(),"Fill all fields!",Toast.LENGTH_SHORT).show()
             return
         }
-        val newKitem = KiteItem(0,mName,mSeason)
-        mToKiteModel.insertData(newKitem)
-        Toast.makeText(requireContext(),"Kitem added!",Toast.LENGTH_SHORT).show()
+        createNewKitem(mName, mSeason)
         findNavController().navigate(R.id.action_addFragment_to_listFragment)
     }
 
+    private fun createNewKitem(
+        mName: String,
+        mSeason: Season
+    ) {
+        val newKitem = KiteItem(mName, mSeason)
+        mToKiteModel.insertData(newKitem)
+        Toast.makeText(requireContext(), "Kitem added!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateKitem(kitem: KiteItem,mName:String,mSeason:Season) {
+        if (kitem.name==mName) {
+            kitem.season = mSeason
+            Toast.makeText(requireContext(), "Kitem updated!", Toast.LENGTH_SHORT).show()
+        }else{
+            createNewKitem(mName,mSeason)
+        }
+    }
 
 
 

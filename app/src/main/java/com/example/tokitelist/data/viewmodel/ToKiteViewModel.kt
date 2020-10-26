@@ -8,6 +8,7 @@ import com.example.tokitelist.data.ToKiteDB
 import com.example.tokitelist.data.models.KiteItem
 import com.example.tokitelist.data.repository.ToKiteRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ToKiteViewModel(application: Application):AndroidViewModel(application) {
@@ -25,5 +26,13 @@ class ToKiteViewModel(application: Application):AndroidViewModel(application) {
 
     fun insertData(kiteItem: KiteItem){
         viewModelScope.launch(Dispatchers.IO) { repository.insertData(kiteItem) }
+    }
+
+    fun getKitemByName(name:String): Job {
+        return viewModelScope.launch(Dispatchers.IO) { repository.getKitemByName(name) }
+    }
+
+    fun deleteData(name: String) {
+        viewModelScope.launch(Dispatchers.IO) { repository.deleteData(name) }
     }
 }

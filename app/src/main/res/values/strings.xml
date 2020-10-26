@@ -21,4 +21,6 @@
     <string name="sort_by">sort by</string>
     <string name="filter">filter</string>
     <string name="add">add</string>
+    <string name="removeItem">delete</string>
+    <string name="delete">delete</string>
 </resources>
