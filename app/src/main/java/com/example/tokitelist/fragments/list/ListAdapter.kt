@@ -47,6 +47,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     fun setData(data: List<KiteItem>){
         this.dataList = data
+
         notifyDataSetChanged()
     }
 

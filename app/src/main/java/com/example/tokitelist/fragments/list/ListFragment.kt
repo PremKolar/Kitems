@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tokitelist.MainActivity
 import com.example.tokitelist.R
 import com.example.tokitelist.data.viewmodel.ToKiteViewModel
+import com.example.tokitelist.fragments.edit.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
 
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
     private val adapter: ListAdapter by lazy { ListAdapter() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
@@ -28,22 +30,13 @@ class ListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
-//        recyclerView.setOnLongClickListener {
-//            AlertDialog.Builder(activity)
-//                .setTitle("REMOVE ITEM")
-//                .setMessage(R.string.removeItem)
-//                .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, which ->
-//                    adapter.deleteItem(activity,this)
-//                })
-//                .setNegativeButton(android.R.string.no, null)
-//                .setIcon(android.R.drawable.ic_dialog_alert)
-//                .show()
-//            true}
-
-
-
-        mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer { data->adapter.setData(data) })
-
+        mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer {
+            data->adapter.setData(data)
+            mSharedViewModel.checkIfDataIsEmpty(data)
+        })
+        mSharedViewModel.dbIsEmpty.observe(viewLifecycleOwner, Observer {
+            showEmptyDB(mSharedViewModel.dbIsEmpty.value!!)
+        })
         view.floatingActionButton.setOnClickListener{
             val nc =findNavController()
             nc.navigate(R.id.action_listFragment_to_addFragment)
@@ -52,6 +45,17 @@ class ListFragment : Fragment() {
         setHasOptionsMenu(true)
 
         return view
+    }
+
+    private fun showEmptyDB(dbIsEmpty: Boolean) {
+        if (dbIsEmpty) {
+            view?.imageView_ready?.visibility = View.VISIBLE
+            view?.textView_ready?.visibility = View.VISIBLE
+        }else{
+            view?.imageView_ready?.visibility = View.INVISIBLE
+            view?.textView_ready?.visibility = View.INVISIBLE
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

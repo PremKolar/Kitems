@@ -6,10 +6,18 @@ import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.example.tokitelist.R
+import com.example.tokitelist.data.models.KiteItem
 import com.example.tokitelist.data.models.Season
 
 class SharedViewModel(application: Application):AndroidViewModel(application) {
+
+    var dbIsEmpty:MutableLiveData<Boolean> = MutableLiveData(true)
+
+    fun checkIfDataIsEmpty(kitems: List<KiteItem>){
+        dbIsEmpty.value = kitems.isEmpty()
+    }
 
     val listener: AdapterView.OnItemSelectedListener = object :
     AdapterView.OnItemSelectedListener{
