@@ -15,8 +15,8 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
 
     var dbIsEmpty:MutableLiveData<Boolean> = MutableLiveData(true)
 
-    fun checkIfDataIsEmpty(kitems: List<KiteItem>){
-        dbIsEmpty.value = kitems.isEmpty()
+    fun checkIfDataIsEmpty(kitems: List<KiteItem>?){
+        dbIsEmpty.value = kitems?.isEmpty()
     }
 
     val listener: AdapterView.OnItemSelectedListener = object :

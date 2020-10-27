@@ -45,9 +45,12 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         return dataList.size
     }
 
-    fun setData(data: List<KiteItem>){
-        this.dataList = data
-
+    fun setData(data: List<KiteItem>?){
+        if (data != null) {
+            this.dataList = data
+        }else{
+            this.dataList = this.dataList.subList(0,0) // todo
+        }
         notifyDataSetChanged()
     }
 

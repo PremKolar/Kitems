@@ -35,4 +35,12 @@ class ToKiteViewModel(application: Application):AndroidViewModel(application) {
     fun deleteData(name: String) {
         viewModelScope.launch(Dispatchers.IO) { repository.deleteData(name) }
     }
+
+    fun checkKitem(kitem: KiteItem) {
+        viewModelScope.launch(Dispatchers.IO) { repository.checkKitem(kitem) }
+    }
+
+    fun restart() {
+        viewModelScope.launch(Dispatchers.IO) { repository.uncheckAllKitems() }
+    }
 }

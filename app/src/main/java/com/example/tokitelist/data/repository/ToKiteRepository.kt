@@ -8,6 +8,7 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
     val getAllData: LiveData<List<KiteItem>> = toKiteDao.getAllData()
 
     suspend fun insertData(kiteItem: KiteItem){
+        kiteItem.checked = false
         toKiteDao.insertData(kiteItem)
     }
 
@@ -17,5 +18,13 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
 
     fun deleteData(name: String) {
                 toKiteDao.deleteData(name)
+    }
+
+    fun checkKitem(kitem: KiteItem) {
+        toKiteDao.checkKitem(kitem.name)
+    }
+
+    fun uncheckAllKitems() {
+        toKiteDao.uncheckAllKitems()
     }
 }

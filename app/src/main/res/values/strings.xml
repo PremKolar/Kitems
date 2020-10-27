@@ -13,7 +13,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nameOfItem">Item</string>
     <string name="addSpot">add spot!</string>
-    <string name="ready">ready!</string>
+    <string name="ready">GO!</string>
     <string name="addButtonDescr">add item</string>
     <string name="allDoneDescr">all done!</string>
     <string name="addSpotFromAddItemFragment">add new spot</string>

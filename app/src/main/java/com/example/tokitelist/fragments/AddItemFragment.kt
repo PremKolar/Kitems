@@ -48,11 +48,11 @@ class AddItemFragment : Fragment() {
     }
 
     private fun hideTrashcan(menu: Menu) {
-        if (menu!=null) menu.getItem(0).isVisible = false
+        menu.getItem(0).isVisible = false
     }
 
     private fun showTrashcan(menu: Menu) {
-        if (menu!=null) menu.getItem(0).isVisible = true
+        menu.getItem(0).isVisible = true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -63,7 +63,6 @@ class AddItemFragment : Fragment() {
             hideTrashcan(menu)
         }
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
@@ -94,7 +93,7 @@ class AddItemFragment : Fragment() {
         mName: String,
         mSeason: Season
     ) {
-        val newKitem = KiteItem(mName, mSeason)
+        val newKitem = KiteItem(mName, mSeason, checked = false)
         mToKiteModel.insertData(newKitem)
         Toast.makeText(requireContext(), "Kitem added!", Toast.LENGTH_SHORT).show()
     }

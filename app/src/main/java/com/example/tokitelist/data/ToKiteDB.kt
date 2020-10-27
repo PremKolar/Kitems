@@ -15,6 +15,8 @@ abstract class ToKiteDB: RoomDatabase() {
         private var INSTANCE: ToKiteDB? = null
 
         fun getDataBase(context: Context): ToKiteDB{
+
+
             val tempInstance = INSTANCE
             if(tempInstance!=null){
                 return tempInstance
@@ -24,7 +26,7 @@ abstract class ToKiteDB: RoomDatabase() {
                         context.applicationContext,
                         ToKiteDB::class.java,
                         "kite_items_table"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }

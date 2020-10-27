@@ -10,5 +10,6 @@ import kotlinx.android.parcel.Parcelize
 data class KiteItem (
         @PrimaryKey()
         var name:String,
-        var season: Season
+        var season: Season,
+        var checked:Boolean = false
 ): Parcelable
