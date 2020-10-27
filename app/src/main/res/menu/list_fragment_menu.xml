@@ -5,19 +5,20 @@
         android:id="@+id/menu_summer"
         android:title="summer"
         android:icon="@drawable/ic_hot"
-        android:iconTint="@color/white"
+        android:iconTint="@color/black"
         app:showAsAction="ifRoom"/>
    <item
         android:id="@+id/menu_winter"
         android:title="winter"
         android:icon="@drawable/ic_cold"
-        android:iconTint="@color/white"
+        android:iconTint="@color/black"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/menu_restart"
-        android:title="restart"
+        android:checkable="false"
         android:icon="@drawable/ic_restart"
-        android:iconTint="@color/white"
-        app:showAsAction="ifRoom"/>
+        android:iconTint="@color/black"
+        android:title="restart"
+        app:showAsAction="ifRoom" />
 
 </menu>

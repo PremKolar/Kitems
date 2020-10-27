@@ -17,6 +17,8 @@ import com.example.tokitelist.data.models.KiteItem
 import com.example.tokitelist.data.models.Season
 import com.example.tokitelist.data.viewmodel.ToKiteViewModel
 import com.example.tokitelist.fragments.edit.SharedViewModel
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
@@ -32,6 +34,11 @@ class ListFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         val recyclerView = view.recyclerView
+        recyclerView.itemAnimator = SlideInLeftAnimator().apply {
+            addDuration = 300
+            removeDuration = 300
+            changeDuration = 300
+        }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         swipeToCheck(recyclerView)
@@ -74,6 +81,8 @@ class ListFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val itemToCheck = adapter.dataList[viewHolder.adapterPosition]
                 mToKiteViewModel.checkKitem(itemToCheck)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+
                 Toast.makeText(requireContext(), "${itemToCheck.name} ✓", Toast.LENGTH_SHORT).show()
             }
         }
