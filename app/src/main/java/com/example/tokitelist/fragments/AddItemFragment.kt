@@ -90,23 +90,12 @@ class AddItemFragment : Fragment() {
     }
 
     private fun createNewKitem(
-        mName: String,
-        mSeason: Season
+            mName: String,
+            mSeason: Season
     ) {
         val newKitem = KiteItem(mName, mSeason, checked = false)
         mToKiteModel.insertData(newKitem)
         Toast.makeText(requireContext(), "Kitem added!", Toast.LENGTH_SHORT).show()
     }
-
-    private fun updateKitem(kitem: KiteItem,mName:String,mSeason:Season) {
-        if (kitem.name==mName) {
-            kitem.season = mSeason
-            Toast.makeText(requireContext(), "Kitem updated!", Toast.LENGTH_SHORT).show()
-        }else{
-            createNewKitem(mName,mSeason)
-        }
-    }
-
-
 
 }

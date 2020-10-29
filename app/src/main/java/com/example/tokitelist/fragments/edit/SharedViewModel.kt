@@ -1,6 +1,7 @@
 package com.example.tokitelist.fragments.edit
 
 import android.app.Application
+import android.graphics.SumPathEffect
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -20,7 +21,7 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
     }
 
     val listener: AdapterView.OnItemSelectedListener = object :
-    AdapterView.OnItemSelectedListener{
+            AdapterView.OnItemSelectedListener{
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             when(position){
                 0 -> {(parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application,R.color.cold))}
@@ -44,5 +45,14 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
     fun verifyDataFromUser(mName: String): Boolean {
         return mName.isNotEmpty()
     }
+
+    fun strToSeason(string: String?): Season? {
+        return when(string){
+            "winter" -> Season.winter
+            "summer" -> Season.summer
+            else -> Season.always
+        }
+    }
+
 
 }
