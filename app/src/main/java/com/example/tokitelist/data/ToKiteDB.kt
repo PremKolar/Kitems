@@ -38,8 +38,8 @@ abstract class ToKiteDB: RoomDatabase() {
 
                 val rdc: Callback = object : Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
-                        addKitem("kite small",Season.always)
-                        addKitem("kite large",Season.always)
+                        addKitem("Kite small",Season.always)
+                        addKitem("Kite large",Season.always)
                         addKitem("Harness",Season.always)
                         addKitem("Bar",Season.always)
                         addKitem("Leash",Season.always)
@@ -50,6 +50,8 @@ abstract class ToKiteDB: RoomDatabase() {
                         addKitem("Cash",Season.always)
                         addKitem("Sunscreen",Season.summer)
                         addKitem("Hood",Season.winter)
+                        addKitem("Booties",Season.winter)
+                        addKitem("Gloves",Season.winter)
 
                     }
 
