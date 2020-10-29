@@ -1,12 +1,12 @@
 package com.example.tokitelist.fragments.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,15 +18,15 @@ import com.example.tokitelist.data.models.Season
 import com.example.tokitelist.data.viewmodel.ToKiteViewModel
 import com.example.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
 
-    private var season: MutableLiveData<Season> = MutableLiveData(Season.always)
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
     private val adapter: ListAdapter by lazy { ListAdapter() }
+    var sessionSeason:Season = Season.always
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
@@ -47,15 +47,16 @@ class ListFragment : Fragment() {
             triggerDataSetting(data)
         })
 
-        this.season.observe(viewLifecycleOwner, Observer {
-            triggerDataSetting(mToKiteViewModel.getAllData.value)
-        })
-
         mSharedViewModel.dbIsEmpty.observe(viewLifecycleOwner, Observer {
             showEmptyDB(mSharedViewModel.dbIsEmpty.value)
         })
 
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val s = sharedPref?.getString("sessionSeason","always")
+        this.sessionSeason = mSharedViewModel.strToSeason(s)!!
+
         view.floatingActionButton.setOnClickListener{
+
             val nc =findNavController()
             nc.navigate(R.id.action_listFragment_to_addFragment)
         }
@@ -69,10 +70,16 @@ class ListFragment : Fragment() {
         val filteredData = filterData(data)
         adapter.setData(filteredData)
         mSharedViewModel.checkIfDataIsEmpty(filteredData)
+        when (sessionSeason){
+            Season.summer -> (activity as AppCompatActivity).supportActionBar?.title = "summer sesh"
+            Season.winter -> (activity as AppCompatActivity).supportActionBar?.title = "winter sesh"
+            else -> (activity as AppCompatActivity).supportActionBar?.title = "Kitems"
+        }
     }
 
     private fun filterData(data: List<KiteItem>?): List<KiteItem>? {
-        val fdata = data?.filter { !it.checked && (this.season.value == Season.always || (it.season==Season.always || this.season.value==it.season)) }
+        val setSeason = sessionSeason
+        val fdata = data?.filter { !it.checked && (setSeason == Season.always || (it.season==Season.always || setSeason==it.season)) }
         return fdata
     }
 
@@ -120,16 +127,26 @@ class ListFragment : Fragment() {
     }
 
     private fun filterOnWinter() {
-        this.season.value = Season.winter
-        (activity as AppCompatActivity).supportActionBar?.title = "winter sesh"
+        setSeason(Season.winter)
+        triggerDataSetting(mToKiteViewModel.getAllData.value)
+
     }
 
     private fun filterOnSummer() {
-        this.season.value = Season.summer
-        (activity as AppCompatActivity).supportActionBar?.title = "summer sesh"
+        setSeason(Season.summer)
+        triggerDataSetting(mToKiteViewModel.getAllData.value)
     }
 
 
+    fun setSeason(s: Season) {
+        this.sessionSeason = s
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString("sessionSeason", s.toString())
+            apply()
+        }
+
+    }
 }
 
 
