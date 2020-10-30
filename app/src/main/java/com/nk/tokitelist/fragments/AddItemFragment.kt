@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
@@ -75,6 +76,11 @@ class AddItemFragment : Fragment() {
     private fun deleteItemFromDB() {
         val mName = editText_nameOfItem.text.toString()
         mToKiteModel.deleteData(mName)
+        val snack =  Snackbar.make(requireView(),"Deleted '${mName}!'",Snackbar.LENGTH_LONG)
+        snack.setAction("Undo"){
+            mToKiteModel.insertData(args.currentKitem)
+        }
+        snack.show()
         findNavController().navigate(R.id.action_addFragment_to_listFragment)
     }
 
@@ -90,8 +96,8 @@ class AddItemFragment : Fragment() {
     }
 
     private fun createNewKitem(
-            mName: String,
-            mSeason: Season
+        mName: String,
+        mSeason: Season
     ) {
         val newKitem = KiteItem(mName, mSeason, checked = false)
         mToKiteModel.insertData(newKitem)
