@@ -86,7 +86,7 @@ class ListFragment : Fragment() {
 
     private fun stylizeForGeneral() {
         (activity as AppCompatActivity).supportActionBar?.title = "Kitems"
-        colorActionBar(R.color.allYear)
+        colorActionBar(R.color.primary)
     }
     private fun stylizeForWinterSession() {
         (activity as AppCompatActivity).supportActionBar?.title = "winter session"
