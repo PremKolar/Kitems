@@ -1,10 +1,14 @@
 package com.example.tokitelist.fragments.list
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,6 +24,7 @@ import com.example.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
+
 class ListFragment : Fragment() {
 
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
@@ -28,7 +33,11 @@ class ListFragment : Fragment() {
     var sessionSeason:Season = Season.always
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View?
     {
 
         // Inflate the layout for this fragment
@@ -52,7 +61,7 @@ class ListFragment : Fragment() {
         })
 
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val s = sharedPref?.getString("sessionSeason","always")
+        val s = sharedPref?.getString("sessionSeason", "always")
         this.sessionSeason = mSharedViewModel.strToSeason(s)!!
 
         view.floatingActionButton.setOnClickListener{
@@ -71,10 +80,33 @@ class ListFragment : Fragment() {
         adapter.setData(filteredData)
         mSharedViewModel.checkIfDataIsEmpty(filteredData)
         when (sessionSeason){
-            Season.summer -> (activity as AppCompatActivity).supportActionBar?.title = "summer sesh"
-            Season.winter -> (activity as AppCompatActivity).supportActionBar?.title = "winter sesh"
-            else -> (activity as AppCompatActivity).supportActionBar?.title = "Kitems"
+            Season.summer -> stylizeForSummerSession()
+            Season.winter -> stylizeForWinterSession()
+            else -> stylizeForGeneral()
         }
+    }
+
+    private fun stylizeForGeneral() {
+        (activity as AppCompatActivity).supportActionBar?.title = "Kitems"
+        colorActionBar(R.color.allYear)
+    }
+    private fun stylizeForWinterSession() {
+        (activity as AppCompatActivity).supportActionBar?.title = "winter session"
+        colorActionBar(R.color.cold)
+    }
+    private fun stylizeForSummerSession() {
+        (activity as AppCompatActivity).supportActionBar?.title = "summer session"
+        colorActionBar(R.color.hot)
+    }
+
+    private fun colorActionBar(rcolor:Int) {
+        (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(
+                ContextCompat.getColor(
+                    requireContext(), rcolor
+                )
+            )
+        )
     }
 
     private fun filterData(data: List<KiteItem>?): List<KiteItem>? {
@@ -105,7 +137,6 @@ class ListFragment : Fragment() {
             view?.imageView_ready?.visibility = View.INVISIBLE
             view?.textView_ready?.visibility = View.INVISIBLE
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -141,7 +172,7 @@ class ListFragment : Fragment() {
     fun setSeason(s: Season) {
         this.sessionSeason = s
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putString("sessionSeason", s.toString())
             apply()
         }
