@@ -35,9 +35,9 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         }
 
         when (dataList[position].season) {
-            Season.summer -> holder.itemView.row_background.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.hot))
-            Season.winter -> holder.itemView.row_background.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.cold))
-            Season.always -> holder.itemView.row_background.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.allYear))
+            Season.summer -> holder.itemView.row_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.hot))
+            Season.winter -> holder.itemView.row_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.cold))
+            Season.always -> holder.itemView.row_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.allYear))
         }
     }
 
