@@ -32,6 +32,6 @@
             app:popExitAnim="@android:anim/fade_out" />
         <argument
             android:name="currentKitem"
-            app:argType="com.example.tokitelist.data.models.KiteItem" />
+            app:argType="com.nk.tokitelist.data.models.KiteItem" />
     </fragment>
 </navigation>
