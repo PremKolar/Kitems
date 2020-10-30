@@ -1,4 +1,4 @@
-package com.example.tokitelist.data
+package com.nk.tokitelist.data
 
 import android.content.Context
 import androidx.room.Database
@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.tokitelist.data.models.KiteItem
-import com.example.tokitelist.data.models.Season
+import com.nk.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.models.Season
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 

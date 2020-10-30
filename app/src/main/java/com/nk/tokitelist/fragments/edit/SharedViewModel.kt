@@ -1,16 +1,15 @@
-package com.example.tokitelist.fragments.edit
+package com.nk.tokitelist.fragments.edit
 
 import android.app.Application
-import android.graphics.SumPathEffect
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.tokitelist.R
-import com.example.tokitelist.data.models.KiteItem
-import com.example.tokitelist.data.models.Season
+import com.nk.tokitelist.R
+import com.nk.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.models.Season
 
 class SharedViewModel(application: Application):AndroidViewModel(application) {
 

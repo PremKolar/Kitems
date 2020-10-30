@@ -1,8 +1,8 @@
-package com.example.tokitelist.data
+package com.nk.tokitelist.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.models.KiteItem
 
 @Dao
 interface ToKiteDao {

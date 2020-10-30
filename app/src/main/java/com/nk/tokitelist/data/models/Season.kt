@@ -1,4 +1,4 @@
-package com.example.tokitelist.data.models
+package com.nk.tokitelist.data.models
 
 enum class Season {
     winter,

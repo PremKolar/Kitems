@@ -1,4 +1,4 @@
-package com.example.tokitelist
+package com.nk.tokitelist
 
 import org.junit.Test
 

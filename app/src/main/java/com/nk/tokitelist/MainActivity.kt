@@ -1,4 +1,4 @@
-package com.example.tokitelist
+package com.nk.tokitelist
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

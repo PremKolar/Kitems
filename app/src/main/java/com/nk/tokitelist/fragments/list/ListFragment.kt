@@ -1,12 +1,10 @@
-package com.example.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,11 +14,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tokitelist.R
-import com.example.tokitelist.data.models.KiteItem
-import com.example.tokitelist.data.models.Season
-import com.example.tokitelist.data.viewmodel.ToKiteViewModel
-import com.example.tokitelist.fragments.edit.SharedViewModel
+import com.nk.tokitelist.R
+import com.nk.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.models.Season
+import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
+import com.nk.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_list.view.*
 

@@ -1,4 +1,4 @@
-package com.example.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tokitelist.MainActivity
-import com.example.tokitelist.R
-import com.example.tokitelist.data.models.KiteItem
-import com.example.tokitelist.data.models.Season
+import com.nk.tokitelist.MainActivity
+import com.nk.tokitelist.R
+import com.nk.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.models.Season
 import kotlinx.android.synthetic.main.row_layout.view.*
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {

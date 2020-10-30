@@ -5,7 +5,7 @@
     <data>
         <variable
             name="kiteItem"
-            type="com.example.tokitelist.data.models.KiteItem" />
+            type="com.nk.tokitelist.data.models.KiteItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

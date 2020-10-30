@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.tokitelist"
+        applicationId "com.nk.com.nk.tokitelist"
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1

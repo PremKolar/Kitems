@@ -1,12 +1,12 @@
-package com.example.tokitelist.data.viewmodel
+package com.nk.tokitelist.data.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.tokitelist.data.ToKiteDB
-import com.example.tokitelist.data.models.KiteItem
-import com.example.tokitelist.data.repository.ToKiteRepository
+import com.nk.tokitelist.data.ToKiteDB
+import com.nk.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.repository.ToKiteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

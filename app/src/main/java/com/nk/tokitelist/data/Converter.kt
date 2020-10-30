@@ -1,7 +1,7 @@
-package com.example.tokitelist.data
+package com.nk.tokitelist.data
 
 import androidx.room.TypeConverter
-import com.example.tokitelist.data.models.Season
+import com.nk.tokitelist.data.models.Season
 
 class Converter {
 
