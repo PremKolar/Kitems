@@ -19,16 +19,17 @@
 
     <ImageView
         android:id="@+id/imageView_ready"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_ready"
+        android:layout_width="268dp"
+        android:layout_height="241dp"
+        android:alpha="0.5"
+        android:contentDescription="@string/allDoneDescr"
+        android:src="@drawable/ic_kitesurfbg"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="@+id/recyclerView"
         app:layout_constraintStart_toStartOf="@+id/recyclerView"
         app:layout_constraintTop_toTopOf="@+id/recyclerView"
-        app:layout_constraintVertical_bias="0.42000002"
-        android:contentDescription="@string/allDoneDescr" />
+        app:layout_constraintVertical_bias="0.42000002" />
 
     <TextView
         android:id="@+id/textView_ready"

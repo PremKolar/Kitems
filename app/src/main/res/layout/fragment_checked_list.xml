@@ -17,36 +17,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView_nothingChecked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_ready"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/checkedRecyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/checkedRecyclerView"
-        app:layout_constraintStart_toStartOf="@+id/checkedRecyclerView"
-        app:layout_constraintTop_toTopOf="@+id/checkedRecyclerView"
-        app:layout_constraintVertical_bias="0.42000002"
-        android:contentDescription="@string/allDoneDescr" />
-
-    <TextView
-        android:id="@+id/textView_nothingChecked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha=".5"
-        android:text="@string/ready"
-        android:textSize="16sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_nothingChecked" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton_backFromCheckedList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/backFromCheckedListButtonDescr"
+        android:focusable="true"
         android:src="@drawable/ic_arrow_right"
         android:tint="#FFFFFF"
         app:backgroundTint="@color/primary"
@@ -54,10 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_nothingChecked"
-        app:layout_constraintVertical_bias="0.942"
-        android:contentDescription="@string/backFromCheckedListButtonDescr"
-        android:focusable="true" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.942" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -54,8 +54,4 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun deleteItem(activity: MainActivity, listFragment: ListFragment) {
-        activity
-
-    }
 }
