@@ -24,6 +24,10 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
         toKiteDao.checkKitem(kitem.name)
     }
 
+    fun uncheckKitem(kitem: KiteItem) {
+        toKiteDao.uncheckKitem(kitem.name)
+    }
+
     fun uncheckAllKitems() {
         toKiteDao.uncheckAllKitems()
     }

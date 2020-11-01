@@ -43,4 +43,8 @@ class ToKiteViewModel(application: Application):AndroidViewModel(application) {
     fun restart() {
         viewModelScope.launch(Dispatchers.IO) { repository.uncheckAllKitems() }
     }
+
+    fun uncheckKitem(kitemToUncheck: KiteItem) {
+        viewModelScope.launch(Dispatchers.IO) { repository.uncheckKitem(kitemToUncheck) }
+    }
 }

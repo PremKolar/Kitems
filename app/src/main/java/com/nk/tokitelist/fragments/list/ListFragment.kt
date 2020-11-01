@@ -63,10 +63,15 @@ class ListFragment : Fragment() {
         this.sessionSeason = mSharedViewModel.strToSeason(s)!!
 
         view.floatingActionButton.setOnClickListener{
-
             val nc =findNavController()
             nc.navigate(R.id.action_listFragment_to_addFragment)
         }
+
+        view.floatingActionButton_toCheckedList.setOnClickListener{
+            val nc =findNavController()
+            nc.navigate(R.id.action_listFragment_to_checkedListFragment)
+        }
+
         // Set Menu
         setHasOptionsMenu(true)
 

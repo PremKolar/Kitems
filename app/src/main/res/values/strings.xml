@@ -23,4 +23,6 @@
     <string name="add">add</string>
     <string name="removeItem">delete</string>
     <string name="delete">delete</string>
+    <string name="backFromCheckedListButtonDescr">back from checked kitems list button</string>
+    <string name="toCheckedListButtonDescr">button to go to checked list</string>
 </resources>
