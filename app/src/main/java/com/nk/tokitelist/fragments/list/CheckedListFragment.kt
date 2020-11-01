@@ -48,12 +48,6 @@ class CheckedListFragment : Fragment() {
             triggerDataSetting(data)
         })
 
-        view.floatingActionButton_backFromCheckedList.setOnClickListener{
-
-            val nc =findNavController()
-            nc.navigate(R.id.action_checkedListFragment_to_listFragment)
-        }
-
         return view
     }
 
@@ -82,8 +76,6 @@ class CheckedListFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(swipeToCheckCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.checked_list_fragment_menu, menu)
