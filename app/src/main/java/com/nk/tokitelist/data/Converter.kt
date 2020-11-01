@@ -2,6 +2,7 @@ package com.nk.tokitelist.data
 
 import androidx.room.TypeConverter
 import com.nk.tokitelist.data.models.Season
+import com.nk.tokitelist.data.models.SortMode
 
 class Converter {
 

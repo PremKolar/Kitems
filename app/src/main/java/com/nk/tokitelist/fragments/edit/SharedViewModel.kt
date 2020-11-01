@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
+import com.nk.tokitelist.data.models.SortMode
 
 class SharedViewModel(application: Application):AndroidViewModel(application) {
 
@@ -50,6 +51,17 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
             "winter" -> Season.winter
             "summer" -> Season.summer
             else -> Season.always
+        }
+    }
+
+    fun sortModeToText(sortMode: SortMode): String {
+        return when(sortMode){
+            SortMode.ALPHAASC -> "alphabetic ↓"
+            SortMode.ALPHADESC -> "alphabetic ↑"
+            SortMode.SEASONASC -> "season ↓"
+            SortMode.SEASONDESC -> "season ↑"
+            SortMode.INDEXASC -> "# added ↓"
+            SortMode.INDEXDESC -> "# added ↑"
         }
     }
 

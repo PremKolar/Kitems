@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
+import com.nk.tokitelist.data.models.SortMode
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import com.nk.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
 
+    private var sortMode: SortMode = SortMode.ALPHAASC
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
     private val adapter: ListAdapter by lazy { ListAdapter() }
@@ -49,6 +51,12 @@ class ListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         swipeToCheck(recyclerView)
+
+        view.swipeRefreshList.setOnRefreshListener {
+            resortList(recyclerView)
+            view.swipeRefreshList.isRefreshing = false
+        }
+
 
         mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
             triggerDataSetting(data)
@@ -78,8 +86,16 @@ class ListFragment : Fragment() {
         return view
     }
 
+    private fun resortList(recyclerView: RecyclerView?) {
+        val values = enumValues<SortMode>()
+        sortMode = values[(values.indexOf(sortMode) + 1) % values.size]
+        Toast.makeText(requireContext(), "Sort-mode: ${mSharedViewModel.sortModeToText(sortMode)}.", Toast.LENGTH_LONG).show()
+        triggerDataSetting(mToKiteViewModel.getAllData.value)
+    }
+
     private fun triggerDataSetting(data: List<KiteItem>?) {
-        val filteredData = filterData(data)
+        var filteredData = filterData(data)
+        filteredData = sortData(filteredData)
         adapter.setData(filteredData)
         mSharedViewModel.checkIfDataIsEmpty(filteredData)
         when (sessionSeason){
@@ -88,6 +104,43 @@ class ListFragment : Fragment() {
             else -> stylizeForGeneral()
         }
     }
+
+    private fun sortData(data: List<KiteItem>?): List<KiteItem>? {
+        return when (sortMode){
+            SortMode.ALPHAASC -> sortOnAlpha(data,1)
+            SortMode.ALPHADESC -> sortOnAlpha(data,-1)
+            SortMode.INDEXASC -> sortOnIndex(data,1)
+            SortMode.INDEXDESC -> sortOnIndex(data,-1)
+            SortMode.SEASONASC -> sortOnSeason(data,1)
+            SortMode.SEASONDESC -> sortOnSeason(data,-1)
+        }
+    }
+
+    private fun sortOnSeason(data: List<KiteItem>?, dir: Int): List<KiteItem>? {
+        var ans = data?.sortedBy { it.season }
+        if (dir==-1) {
+            ans = ans?.reversed()
+        }
+        return ans
+    }
+
+    private fun sortOnIndex(data: List<KiteItem>?, dir: Int): List<KiteItem>? {
+        var ans = data?.sortedBy { it.addedIdx }
+        if (dir==-1) {
+            ans = ans?.reversed()
+        }
+        return ans
+    }
+
+    private fun sortOnAlpha(data: List<KiteItem>?, dir: Int): List<KiteItem>? {
+        var ans = data?.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.name })
+        if (dir==-1) {
+            ans = ans?.reversed()
+        }
+        return ans
+    }
+
+
 
     private fun stylizeForGeneral() {
         (activity as AppCompatActivity).supportActionBar?.title = "Kitems"
@@ -131,6 +184,21 @@ class ListFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(swipeToCheckCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
+//
+//    private fun pullToSort(recyclerView: RecyclerView){
+//        val pullToSortCallback = object :PullToSort(){
+//            override fun onRefresh() {
+//
+//            }
+//        }
+//
+//        val swipeRefreshLayout = SwipeRefreshLayout()
+//
+//        itemTouchHelper.attachToRecyclerView(recyclerView)
+//    }
+
+
+
 
     private fun showEmptyDB(dbIsEmpty: Boolean?) {
         if (dbIsEmpty==null || dbIsEmpty) {

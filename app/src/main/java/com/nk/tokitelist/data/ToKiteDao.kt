@@ -28,5 +28,8 @@ interface ToKiteDao {
     @Query("UPDATE kite_items_table SET checked=0")
     fun uncheckAllKitems()
 
+    @Query("SELECT MAX(addedIdx) FROM kite_items_table")
+    fun getMaxIndex(): Int
+
 
 }

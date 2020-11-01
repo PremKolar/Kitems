@@ -99,7 +99,7 @@ class AddItemFragment : Fragment() {
         mName: String,
         mSeason: Season
     ) {
-        val newKitem = KiteItem(mName, mSeason, checked = false)
+        val newKitem = KiteItem(mName, mSeason,0, checked = false)
         mToKiteModel.insertData(newKitem)
         Toast.makeText(requireContext(), "Kitem added!", Toast.LENGTH_SHORT).show()
     }

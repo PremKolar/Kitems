@@ -9,7 +9,16 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
 
     suspend fun insertData(kiteItem: KiteItem){
         kiteItem.checked = false
+        kiteItem.addedIdx = getMaxIndex()+1
         toKiteDao.insertData(kiteItem)
+    }
+
+    private fun getMaxIndex(): Int {
+        var m = toKiteDao.getMaxIndex()
+        if (m==null){
+            m = 1
+        }
+        return m
     }
 
     fun getKitemByName(name: String): KiteItem? {
@@ -17,7 +26,7 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
     }
 
     fun deleteData(name: String) {
-                toKiteDao.deleteData(name)
+        toKiteDao.deleteData(name)
     }
 
     fun checkKitem(kitem: KiteItem) {

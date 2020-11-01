@@ -32,28 +32,30 @@ abstract class ToKiteDB: RoomDatabase() {
             }
             synchronized(this){
 
-                fun addKitem(name:String,season: Season){
-                    GlobalScope.async {getDataBase(context).toKiteDao().insertData(KiteItem(name,season,false))  }
+                fun addKitem(name:String,season: Season,idx:Int):Int{
+                    GlobalScope.async {getDataBase(context).toKiteDao().insertData(KiteItem(name,season,idx,false))  }
+                    return (idx+1)
                 }
 
                 val rdc: Callback = object : Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
-                        addKitem("Kite small",Season.always)
-                        addKitem("Kite large",Season.always)
-                        addKitem("Harness",Season.always)
-                        addKitem("Bar",Season.always)
-                        addKitem("Leash",Season.always)
-                        addKitem("Pump",Season.always)
-                        addKitem("Kiteboard",Season.always)
-                        addKitem("Water",Season.always)
-                        addKitem("Food",Season.always)
-                        addKitem("Cash",Season.always)
-                        addKitem("Towel",Season.always)
-                        addKitem("Sunscreen",Season.summer)
-                        addKitem("Surf Shorts",Season.summer)
-                        addKitem("Hood",Season.winter)
-                        addKitem("Booties",Season.winter)
-                        addKitem("Gloves",Season.winter)
+                        var idx = 1
+                        idx = addKitem("Kite small",Season.always,idx)
+                        idx = addKitem("Kite large",Season.always,idx)
+                        idx = addKitem("Harness",Season.always,idx)
+                        idx = addKitem("Bar",Season.always,idx)
+                        idx = addKitem("Leash",Season.always,idx)
+                        idx = addKitem("Pump",Season.always,idx)
+                        idx = addKitem("Kiteboard",Season.always,idx)
+                        idx = addKitem("Water",Season.always,idx)
+                        idx = addKitem("Food",Season.always,idx)
+                        idx = addKitem("Cash",Season.always,idx)
+                        idx = addKitem("Towel",Season.always,idx)
+                        idx = addKitem("Sunscreen",Season.summer,idx)
+                        idx = addKitem("Surf Shorts",Season.summer,idx)
+                        idx = addKitem("Hood",Season.winter,idx)
+                        idx = addKitem("Booties",Season.winter,idx)
+                        idx = addKitem("Gloves",Season.winter,idx)
 
                     }
 
