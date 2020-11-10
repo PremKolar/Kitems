@@ -14,12 +14,12 @@
         android:name="com.nk.tokitelist.fragments.list.CheckedListFragment"
         android:label="CheckedList"
         tools:layout="@layout/fragment_checked_list" >
-        <action
-            android:id="@+id/action_checkedListFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            />
+        <!--        <action-->
+        <!--            android:id="@+id/action_checkedListFragment_to_listFragment"-->
+        <!--            app:destination="@id/listFragment"-->
+        <!--            app:enterAnim="@anim/slide_in_left"-->
+        <!--            app:exitAnim="@anim/slide_out_left"-->
+        <!--            />-->
     </fragment>
 
 
@@ -43,20 +43,41 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_listFragment_to_editSessionFragment"
+            app:destination="@id/editSessionFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_up"
+            app:popEnterAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.nk.tokitelist.fragments.AddItemFragment"
         android:label="Add Item"
         tools:layout="@layout/fragment_add_item" >
+        <argument
+            android:name="currentKitem"
+            app:argType="com.nk.tokitelist.data.models.KiteItem" />
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_right"
-             />
-        <argument
-            android:name="currentKitem"
-            app:argType="com.nk.tokitelist.data.models.KiteItem" />
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/editSessionFragment"
+        android:name="com.nk.tokitelist.fragments.session.EditSessionFragment"
+        android:label="Edit Session"
+        tools:layout="@layout/fragment_edit_session">
+        <action
+            android:id="@+id/action_editSessionFragment_to_sessionsOverviewFragment"
+            app:destination="@id/sessionsOverviewFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/sessionsOverviewFragment"
+        android:name="com.nk.tokitelist.fragments.session.SessionOverviewFragment"
+        android:label="Sessions Overview"
+        tools:layout="@layout/fragment_session_overview"
+        />
 </navigation>

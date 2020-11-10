@@ -75,10 +75,10 @@ class AddItemFragment : Fragment() {
 
     private fun deleteItemFromDB() {
         val mName = editText_nameOfItem.text.toString()
-        mToKiteModel.deleteData(mName)
+        mToKiteModel.deleteKitem(mName)
         val snack =  Snackbar.make(requireView(),"Deleted '${mName}!'",Snackbar.LENGTH_LONG)
         snack.setAction("Undo"){
-            mToKiteModel.insertData(args.currentKitem)
+            mToKiteModel.insertKitem(args.currentKitem)
         }
         snack.show()
         findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -100,7 +100,7 @@ class AddItemFragment : Fragment() {
         mSeason: Season
     ) {
         val newKitem = KiteItem(mName, mSeason,0, checked = false)
-        mToKiteModel.insertData(newKitem)
+        mToKiteModel.insertKitem(newKitem)
         Toast.makeText(requireContext(), "Kitem added!", Toast.LENGTH_SHORT).show()
     }
 

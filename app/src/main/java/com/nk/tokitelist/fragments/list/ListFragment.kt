@@ -34,19 +34,19 @@ class ListFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View?
     {
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
-        val recyclerView = view.recyclerView
+        val recyclerView = view.kitemsListRecyclerView
         recyclerView.itemAnimator = SlideInLeftAnimator().apply {
-            addDuration = 300
-            removeDuration = 300
-            changeDuration = 300
+            addDuration = 200
+            removeDuration = 200
+            changeDuration = 200
         }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
@@ -55,6 +55,10 @@ class ListFragment : Fragment() {
         view.swipeRefreshList.setOnRefreshListener {
             resortList(recyclerView)
             view.swipeRefreshList.isRefreshing = false
+        }
+
+        view.button_logSession.setOnClickListener {
+            saveKiteSession()
         }
 
 
@@ -84,6 +88,10 @@ class ListFragment : Fragment() {
         setHasOptionsMenu(true)
 
         return view
+    }
+
+    private fun saveKiteSession() {
+        findNavController().navigate(R.id.action_listFragment_to_editSessionFragment)
     }
 
     private fun resortList(recyclerView: RecyclerView?) {
@@ -157,11 +165,11 @@ class ListFragment : Fragment() {
 
     private fun colorActionBar(rcolor:Int) {
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    requireContext(), rcolor
+                ColorDrawable(
+                        ContextCompat.getColor(
+                                requireContext(), rcolor
+                        )
                 )
-            )
         )
     }
 
@@ -184,29 +192,14 @@ class ListFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(swipeToCheckCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
-//
-//    private fun pullToSort(recyclerView: RecyclerView){
-//        val pullToSortCallback = object :PullToSort(){
-//            override fun onRefresh() {
-//
-//            }
-//        }
-//
-//        val swipeRefreshLayout = SwipeRefreshLayout()
-//
-//        itemTouchHelper.attachToRecyclerView(recyclerView)
-//    }
-
-
-
 
     private fun showEmptyDB(dbIsEmpty: Boolean?) {
         if (dbIsEmpty==null || dbIsEmpty) {
             view?.imageView_ready?.visibility = View.VISIBLE
-            view?.textView_ready?.visibility = View.VISIBLE
+            view?.button_logSession?.visibility = View.VISIBLE
         }else{
             view?.imageView_ready?.visibility = View.INVISIBLE
-            view?.textView_ready?.visibility = View.INVISIBLE
+            view?.button_logSession?.visibility = View.INVISIBLE
         }
     }
 

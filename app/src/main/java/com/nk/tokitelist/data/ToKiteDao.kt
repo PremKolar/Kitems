@@ -3,6 +3,8 @@ package com.nk.tokitelist.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.nk.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.models.KiteSession
+import com.nk.tokitelist.data.models.Spot
 
 @Dao
 interface ToKiteDao {
@@ -30,6 +32,27 @@ interface ToKiteDao {
 
     @Query("SELECT MAX(addedIdx) FROM kite_items_table")
     fun getMaxIndex(): Int
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertKiteSession(kiteSession: KiteSession)
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertNewSpot(spot: Spot)
+
+    @Query("SELECT * FROM spots_table WHERE name = :spotName")
+   suspend fun getSpotByName(spotName: String): Spot?
+
+    @Query("SELECT COUNT(name) FROM spots_table")
+    suspend fun getNumberOfSpots(): Int
+
+    @Query("SELECT name FROM spots_table")
+    fun getAllSpotNames(): LiveData<Array<String>>
+
+    @Query("DELETE FROM spots_table WHERE name = :spot")
+    fun deleteSpot(spot: String)
+
+    @Query("SELECT * FROM sessions_table ORDER BY date DESC")
+    fun getAllSessions(): LiveData<Array<KiteSession>>
 
 
 }

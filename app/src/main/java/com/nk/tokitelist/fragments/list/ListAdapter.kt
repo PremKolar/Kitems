@@ -16,8 +16,6 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<KiteItem>()
 
-
-
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
     }
