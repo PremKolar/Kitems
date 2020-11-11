@@ -43,6 +43,6 @@ class SessionOverviewFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.edit_session_overview_fragment_menu, menu)
+        inflater.inflate(R.menu.session_overview_fragment_menu, menu)
     }
 }

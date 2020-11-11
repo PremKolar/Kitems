@@ -24,6 +24,7 @@ class Tools {
         }
 
         fun setSpinnerByValue(spinner: Spinner, name: String) {
+            if (name == null) return
             spinner.setSelection(Tools.getSpinnerIndex(spinner, name))
         }
 

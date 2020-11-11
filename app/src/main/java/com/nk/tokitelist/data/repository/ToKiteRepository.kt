@@ -30,7 +30,7 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
         return toKiteDao.getKitemByName(name)
     }
 
-    fun deleteData(name: String) {
+    fun deleteKitem(name: String) {
         toKiteDao.deleteData(name)
     }
 
@@ -50,6 +50,10 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
         toKiteDao.insertKiteSession(kiteSession)
     }
 
+    fun updateKiteSession(kiteSession: KiteSession) {
+        toKiteDao.updateKiteSession(kiteSession)
+    }
+
     fun insertNewSpot(spot: Spot) {
         toKiteDao.insertNewSpot(spot)
     }
@@ -65,5 +69,10 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
     fun deleteSpot(spot: String) {
         toKiteDao.deleteSpot(spot)
     }
+
+    fun deleteSession(session: KiteSession) {
+        toKiteDao.deleteSession(session.id)
+    }
+
 
 }

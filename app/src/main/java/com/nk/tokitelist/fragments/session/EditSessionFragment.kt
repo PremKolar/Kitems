@@ -1,5 +1,4 @@
 package com.nk.tokitelist.fragments.session
-// TODO: 10.11.20 delete spot 
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
@@ -22,10 +21,16 @@ import kotlinx.android.synthetic.main.fragment_edit_session.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.properties.Delegates.observable
 
 
 class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
+    private var deleteSessionButton: MenuItem? = null
+    private var currentSession: KiteSession? by observable(null){ _, old: KiteSession?, new: KiteSession? ->
+        onCurrentSessionChanged?.invoke(old,new)
+    }
+    private var onCurrentSessionChanged: ((KiteSession?, KiteSession?) -> Unit)? = null
     private var freshlyAddedSpotName: String = ""
     private val mToKiteModel: ToKiteViewModel by viewModels()
     private lateinit var thisView: View
@@ -51,12 +56,23 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
             updateSpotsSpinner(data)
         })
 
-        // TODO: 11.11.20 what happens when coming from ADDSESSION button?
-        Tools.setSpinnerByValue(thisView.spinner_spots,args.currentSession.spot.toString())
-        Tools.setDateSetterToDate(thisView.datePickerForSession, args.currentSession.date)
+        this.onCurrentSessionChanged = {old,new -> toggleTrashBin() }
+
+        currentSession = if (args.currentSession == null){
+            null
+        }else{
+            args.currentSession
+        }
+
+        currentSession?.let { Tools.setSpinnerByValue(thisView.spinner_spots,it.spot.toString())  }
+        currentSession?.date?.let { Tools.setDateSetterToDate(thisView.datePickerForSession, it) }
 
         return thisView
 
+    }
+
+    private fun toggleTrashBin() {
+        deleteSessionButton?.let { it.setVisible(currentSession != null)}
     }
 
 
@@ -90,8 +106,16 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         GlobalScope.launch {
             val date = getDate()
             val spot = getSpot()
-            val kiteSession = KiteSession(0, date!!, spot!!)
-            mToKiteModel.insertKiteSession(kiteSession)
+            var kiteSession: KiteSession?;
+            if (currentSession==null){
+                kiteSession = KiteSession(0, date!!, spot!!)
+                mToKiteModel.insertKiteSession(kiteSession!!)
+            }else{
+                kiteSession = currentSession!!
+                kiteSession.date = date!!
+                kiteSession.spot = spot!!
+                mToKiteModel.updateKiteSession(kiteSession!!)
+            }
         }
         Toast.makeText(
                 requireContext(),
@@ -120,6 +144,7 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         when (item.itemId){
             R.id.add_new_spot -> addNewSpot()
             R.id.delete_spot -> deleteCurrentSpot()
+            R.id.menu_delete_session -> deleteCurrentSession()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -128,6 +153,13 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val spot = thisView.spinner_spots.selectedItem.toString()
         mToKiteModel.deleteSpot(spot)
     }
+
+    private fun deleteCurrentSession() {
+        if (currentSession==null) return // shouldnt be possible to get here..
+        mToKiteModel.deleteSession(currentSession!!)
+        currentSession = null
+    }
+
 
     private fun addNewSpot() {
         val builder = AlertDialog.Builder(
@@ -156,6 +188,8 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.edit_session_fragment_menu, menu)
+        deleteSessionButton = menu.findItem(R.id.menu_delete_session)
+        toggleTrashBin()
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

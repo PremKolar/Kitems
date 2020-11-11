@@ -43,4 +43,5 @@
     <string name="addSpotButton">add spot</string>
     <string name="newSpotHint">enter new spot</string>
     <string name="delete_spot">delete this spot</string>
+    <string name="delete_session">delete this session</string>
 </resources>

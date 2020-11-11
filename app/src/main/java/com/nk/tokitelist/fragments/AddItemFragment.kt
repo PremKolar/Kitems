@@ -67,8 +67,8 @@ class AddItemFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
-            R.id.menu_add -> addItemToDB()
-            R.id.menu_delete -> deleteItemFromDB()
+            R.id.menu_add_kitem -> addItemToDB()
+            R.id.menu_delete_kitem -> deleteItemFromDB()
         }
         return super.onOptionsItemSelected(item)
     }
