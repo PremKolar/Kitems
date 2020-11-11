@@ -70,6 +70,9 @@
         android:name="com.nk.tokitelist.fragments.session.EditSessionFragment"
         android:label="Edit Session"
         tools:layout="@layout/fragment_edit_session">
+        <argument
+            android:name="currentSession"
+            app:argType="com.nk.tokitelist.data.models.KiteSession" />
         <action
             android:id="@+id/action_editSessionFragment_to_sessionsOverviewFragment"
             app:destination="@id/sessionsOverviewFragment" />
@@ -79,5 +82,9 @@
         android:name="com.nk.tokitelist.fragments.session.SessionOverviewFragment"
         android:label="Sessions Overview"
         tools:layout="@layout/fragment_session_overview"
-        />
+        >
+        <action
+            android:id="@+id/action_sessionsOverviewFragment_to_editSessionFragment"
+            app:destination="@id/editSessionFragment" />
+    </fragment>
 </navigation>

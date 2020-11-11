@@ -7,18 +7,17 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.nk.tokitelist.R
 import com.nk.tokitelist.Tools
 import com.nk.tokitelist.data.models.KiteSession
 import com.nk.tokitelist.data.models.Spot
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
-import com.nk.tokitelist.fragments.edit.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_edit_session.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,7 +29,7 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var freshlyAddedSpotName: String = ""
     private val mToKiteModel: ToKiteViewModel by viewModels()
     private lateinit var thisView: View
-
+    private val args by navArgs<EditSessionFragmentArgs>()
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -51,6 +50,10 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         mToKiteModel.getAllSpotNames.observe(viewLifecycleOwner, Observer { data ->
             updateSpotsSpinner(data)
         })
+
+        // TODO: 11.11.20 what happens when coming from ADDSESSION button?
+        Tools.setSpinnerByValue(thisView.spinner_spots,args.currentSession.spot.toString())
+        Tools.setDateSetterToDate(thisView.datePickerForSession, args.currentSession.date)
 
         return thisView
 

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.nk.tokitelist.MainActivity
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season

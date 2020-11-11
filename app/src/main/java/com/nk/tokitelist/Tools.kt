@@ -35,6 +35,15 @@ class Tools {
             }
             return -1
         }
+
+        fun setDateSetterToDate(datePicker: DatePicker, date: Date) {
+            val cal = Calendar.getInstance();
+            cal.time = date
+            val year = cal[Calendar.YEAR]
+            val month = cal[Calendar.MONTH]
+            val day = cal[Calendar.DAY_OF_MONTH]
+            datePicker.updateDate(year, month, day)
+        }
     }
 
 }
