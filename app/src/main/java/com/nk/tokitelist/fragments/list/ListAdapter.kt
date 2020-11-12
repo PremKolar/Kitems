@@ -46,7 +46,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         if (data != null) {
             this.dataList = data
         }else{
-            this.dataList = this.dataList.subList(0,0) // todo
+            this.dataList = this.dataList.subList(0,0)
         }
         notifyDataSetChanged()
     }

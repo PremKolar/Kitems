@@ -1,8 +1,7 @@
 package com.nk.tokitelist.fragments.session
-// TODO: 11.11.20 navigate to session list from anywhere. left menu?
+
 // TODO: 11.11.20 colours
 // TODO: 11.11.20 ratable session
-// TODO: 11.11.20 backgrounds all same colour
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,6 +1,5 @@
 package com.nk.tokitelist.fragments.list
 
-// TODO: 12.11.20 SharedViewModell between MainActi2 and ListFrag. set adapter here in onCreateView. move a lot to shearedviemodel. call resp. methods from MainActi2. 
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
