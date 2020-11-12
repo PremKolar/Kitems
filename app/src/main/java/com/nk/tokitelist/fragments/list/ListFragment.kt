@@ -85,7 +85,10 @@ class ListFragment : Fragment() {
         }
 
         // Set Menu
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
+
+
+
 
         return view
     }
@@ -202,11 +205,6 @@ class ListFragment : Fragment() {
             view?.button_logSession?.visibility = View.INVISIBLE
         }
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.list_fragment_menu, menu)
-    }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){

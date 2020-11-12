@@ -5,25 +5,12 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/listFragment">
 
-
-
-
-
     <fragment
         android:id="@+id/checkedListFragment"
         android:name="com.nk.tokitelist.fragments.list.CheckedListFragment"
         android:label="CheckedList"
         tools:layout="@layout/fragment_checked_list" >
-        <!--        <action-->
-        <!--            android:id="@+id/action_checkedListFragment_to_listFragment"-->
-        <!--            app:destination="@id/listFragment"-->
-        <!--            app:enterAnim="@anim/slide_in_left"-->
-        <!--            app:exitAnim="@anim/slide_out_left"-->
-        <!--            />-->
     </fragment>
-
-
-
     <fragment
         android:id="@+id/listFragment"
         android:name="com.nk.tokitelist.fragments.list.ListFragment"
