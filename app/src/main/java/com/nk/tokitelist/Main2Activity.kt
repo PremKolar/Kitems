@@ -2,6 +2,8 @@ package com.nk.tokitelist
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -10,6 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
+import com.nk.tokitelist.fragments.list.ListFragment
 
 
 class Main2Activity : AppCompatActivity() {
@@ -47,6 +51,36 @@ class Main2Activity : AppCompatActivity() {
 
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var listFrag = supportFragmentManager.findFragmentById(R.id.listFragment)
+
+        val firstFragment: ListFragment = supportFragmentManager.fragments[0] as ListFragment
+
+//        when (item.itemId){
+//            R.id.menu_summer -> listFrag.filterOnSummer()
+//            R.id.menu_winter -> listFrag.filterOnWinter()
+//            R.id.menu_restart -> listFrag.restart()
+//        }
+        return super.onOptionsItemSelected(item)
+    }
+
+//    private fun restart() {
+//        mToKiteViewModel.restart()
+//    }
+//
+//    private fun filterOnWinter() {
+////        setSeason(Season.winter)
+////        triggerDataSetting(mToKiteViewModel.getAllData.value)
+//
+//    }
+//
+//    private fun filterOnSummer() {
+////        setSeason(Season.summer)
+////        triggerDataSetting(mToKiteViewModel.getAllData.value)
+//    }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
