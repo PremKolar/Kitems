@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import com.nk.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_checked_list.view.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
 
 
 class CheckedListFragment : Fragment() {
@@ -47,7 +49,9 @@ class CheckedListFragment : Fragment() {
         mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
             triggerDataSetting(data)
         })
-
+        val toolbar: Toolbar = view.toolbar_checked_kitems_list as Toolbar
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         return view
     }
 

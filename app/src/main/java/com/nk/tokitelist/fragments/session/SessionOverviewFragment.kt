@@ -2,6 +2,8 @@ package com.nk.tokitelist.fragments.session
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import kotlinx.android.synthetic.main.fragment_edit_session.view.*
 import kotlinx.android.synthetic.main.fragment_session_overview.view.*
 
 class SessionOverviewFragment : Fragment() {
@@ -38,6 +41,12 @@ class SessionOverviewFragment : Fragment() {
         mToKiteModel.getAllSession.observe(viewLifecycleOwner, Observer { data ->
             adapter.setData(data)
         })
+
+        val toolbar: Toolbar = thisView.toolbar_sessions_overview!!
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.title = "Session"
+
 
         return thisView
     }

@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +19,7 @@ import com.nk.tokitelist.Tools
 import com.nk.tokitelist.data.models.KiteSession
 import com.nk.tokitelist.data.models.Spot
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
+import kotlinx.android.synthetic.main.fragment_add_item.view.*
 import kotlinx.android.synthetic.main.fragment_edit_session.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -66,6 +69,12 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         currentSession?.let { Tools.setSpinnerByValue(thisView.spinner_spots,it.spot.toString())  }
         currentSession?.date?.let { Tools.setDateSetterToDate(thisView.datePickerForSession, it) }
+
+        val toolbar: Toolbar = thisView.toolbar_addEdit_session!!
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.title = "Edit Session"
+
 
         return thisView
 

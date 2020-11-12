@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -37,9 +38,9 @@ class ListFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View?
     {
 
@@ -89,9 +90,11 @@ class ListFragment : Fragment() {
 
         // Set Menu
         setHasOptionsMenu(true)
-
+//
         val toolbar: Toolbar = view.toolbar_kitems_list as Toolbar
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+//        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
 
 
         return view
@@ -110,9 +113,9 @@ class ListFragment : Fragment() {
         val values = enumValues<SortMode>()
         sortMode = values[(values.indexOf(sortMode) + 1) % values.size]
         Toast.makeText(
-            requireContext(),
-            "Sort-mode: ${mSharedViewModel.sortModeToText(sortMode)}.",
-            Toast.LENGTH_LONG
+                requireContext(),
+                "Sort-mode: ${mSharedViewModel.sortModeToText(sortMode)}.",
+                Toast.LENGTH_LONG
         ).show()
         triggerDataSetting(mToKiteViewModel.getAllData.value)
     }
@@ -181,11 +184,11 @@ class ListFragment : Fragment() {
 
     private fun colorActionBar(rcolor: Int) {
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    requireContext(), rcolor
+                ColorDrawable(
+                        ContextCompat.getColor(
+                                requireContext(), rcolor
+                        )
                 )
-            )
         )
     }
 
