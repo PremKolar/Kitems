@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,9 +37,9 @@ class ListFragment : Fragment() {
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View?
     {
 
@@ -87,13 +88,19 @@ class ListFragment : Fragment() {
         }
 
         // Set Menu
-        setHasOptionsMenu(false)
+        setHasOptionsMenu(true)
 
-
+        val toolbar: Toolbar = view.toolbar_kitems_list as Toolbar
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
 
 
         return view
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_fragment_menu, menu)
+    }
+
 
     private fun saveKiteSession() {
         findNavController().navigate(R.id.action_listFragment_to_editSessionFragment)
@@ -102,7 +109,11 @@ class ListFragment : Fragment() {
     private fun resortList(recyclerView: RecyclerView?) {
         val values = enumValues<SortMode>()
         sortMode = values[(values.indexOf(sortMode) + 1) % values.size]
-        Toast.makeText(requireContext(), "Sort-mode: ${mSharedViewModel.sortModeToText(sortMode)}.", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            requireContext(),
+            "Sort-mode: ${mSharedViewModel.sortModeToText(sortMode)}.",
+            Toast.LENGTH_LONG
+        ).show()
         triggerDataSetting(mToKiteViewModel.getAllData.value)
     }
 
@@ -120,12 +131,12 @@ class ListFragment : Fragment() {
 
     private fun sortData(data: List<KiteItem>?): List<KiteItem>? {
         return when (sortMode){
-            SortMode.ALPHAASC -> sortOnAlpha(data,1)
-            SortMode.ALPHADESC -> sortOnAlpha(data,-1)
-            SortMode.INDEXASC -> sortOnIndex(data,1)
-            SortMode.INDEXDESC -> sortOnIndex(data,-1)
-            SortMode.SEASONASC -> sortOnSeason(data,1)
-            SortMode.SEASONDESC -> sortOnSeason(data,-1)
+            SortMode.ALPHAASC -> sortOnAlpha(data, 1)
+            SortMode.ALPHADESC -> sortOnAlpha(data, -1)
+            SortMode.INDEXASC -> sortOnIndex(data, 1)
+            SortMode.INDEXDESC -> sortOnIndex(data, -1)
+            SortMode.SEASONASC -> sortOnSeason(data, 1)
+            SortMode.SEASONDESC -> sortOnSeason(data, -1)
         }
     }
 
@@ -168,13 +179,13 @@ class ListFragment : Fragment() {
         colorActionBar(R.color.hot)
     }
 
-    private fun colorActionBar(rcolor:Int) {
+    private fun colorActionBar(rcolor: Int) {
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
-                ColorDrawable(
-                        ContextCompat.getColor(
-                                requireContext(), rcolor
-                        )
+            ColorDrawable(
+                ContextCompat.getColor(
+                    requireContext(), rcolor
                 )
+            )
         )
     }
 
