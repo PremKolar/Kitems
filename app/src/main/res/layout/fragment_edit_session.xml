@@ -43,7 +43,6 @@
                 android:id="@+id/datePickerForSession"
                 android:layout_width="match_parent"
                 android:layout_height="149dp"
-                android:background="@color/truewhite"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 android:headerBackground="@color/primary" />

@@ -27,7 +27,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemView.txt_name.text = dataList[position].name
         holder.itemView.row_background.setOnClickListener{
-            val action = ListFragmentDirections.actionListFragmentToAddFragment(dataList[position])
+            val action = KitemsListFragmentDirections.actionListFragmentToAddFragment(dataList[position])
             holder.itemView.findNavController().navigate(action)
         }
 

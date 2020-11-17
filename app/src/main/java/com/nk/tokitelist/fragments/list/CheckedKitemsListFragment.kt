@@ -1,6 +1,5 @@
 package com.nk.tokitelist.fragments.list
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -18,10 +17,9 @@ import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import com.nk.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_checked_list.view.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
 
 
-class CheckedListFragment : Fragment() {
+class CheckedKitemsListFragment : Fragment() {
 
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()

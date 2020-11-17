@@ -7,15 +7,15 @@
 
     <fragment
         android:id="@+id/checkedListFragment"
-        android:name="com.nk.tokitelist.fragments.list.CheckedListFragment"
+        android:name="com.nk.tokitelist.fragments.list.CheckedKitemsListFragment"
         android:label="CheckedList"
         tools:layout="@layout/fragment_checked_list" >
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.nk.tokitelist.fragments.list.ListFragment"
+        android:name="com.nk.tokitelist.fragments.list.KitemsListFragment"
         android:label="List"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_kitems_list" >
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment"

@@ -1,22 +1,23 @@
 package com.nk.tokitelist.fragments.session
-
-// TODO: 11.11.20 colours
+// TODO: 13.11.20 nightdaytheme 
 // TODO: 11.11.20 ratable session
+// TODO: 17.11.20 kitem in checlked list antipppen crashes 
+// TODO: 17.11.20 sessions in summer/winter farbe 
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteSession
-import com.nk.tokitelist.fragments.list.ListFragmentDirections
+import com.nk.tokitelist.data.models.Season
+import com.nk.tokitelist.data.models.Spot
 import kotlinx.android.synthetic.main.row_layout.view.*
 import kotlinx.android.synthetic.main.session_row_layout.view.*
 import kotlinx.android.synthetic.main.session_row_layout.view.row_session_background
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class SessionListAdapter: RecyclerView.Adapter<SessionListAdapter.MyViewHolder>() {
 
@@ -38,6 +39,10 @@ class SessionListAdapter: RecyclerView.Adapter<SessionListAdapter.MyViewHolder>(
         holder.itemView.row_session_background.setOnClickListener{
             val action = SessionOverviewFragmentDirections.actionSessionsOverviewFragmentToEditSessionFragment(dataList[position])
             holder.itemView.findNavController().navigate(action)
+        }
+        // TODO: 17.11.20 introduce season for session and colorize accordingly 
+        when (dataList[position].spot) {
+            dataList[position].spot -> holder.itemView.row_session_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.cold))
         }
     }
 

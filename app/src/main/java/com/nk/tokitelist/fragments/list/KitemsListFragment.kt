@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -24,10 +23,10 @@ import com.nk.tokitelist.data.models.SortMode
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import com.nk.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.fragment_list.view.*
+import kotlinx.android.synthetic.main.fragment_kitems_list.view.*
 
 
-class ListFragment : Fragment() {
+class KitemsListFragment : Fragment() {
 
     private var sortMode: SortMode = SortMode.ALPHAASC
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
@@ -44,7 +43,7 @@ class ListFragment : Fragment() {
     {
 
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_kitems_list, container, false)
         val recyclerView = view.kitemsListRecyclerView
         recyclerView.itemAnimator = SlideInLeftAnimator().apply {
             addDuration = 200
@@ -93,7 +92,13 @@ class ListFragment : Fragment() {
         val toolbar: Toolbar = view.toolbar_kitems_list as Toolbar
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
 //        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+//        val col = ColorDrawable(ContextCompat.getColor(requireContext(), R.color.black))
+//        toolbar.setTitleTextColor(col);
+//        toolbar.setSubtitleTextColor(col);
 
+
+
+        stylizeForGeneral()
 
 
         return view
