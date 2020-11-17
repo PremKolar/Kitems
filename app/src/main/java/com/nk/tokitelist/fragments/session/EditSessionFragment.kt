@@ -17,9 +17,9 @@ import androidx.navigation.fragment.navArgs
 import com.nk.tokitelist.R
 import com.nk.tokitelist.Tools
 import com.nk.tokitelist.data.models.KiteSession
+import com.nk.tokitelist.data.models.Season
 import com.nk.tokitelist.data.models.Spot
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
-import kotlinx.android.synthetic.main.fragment_add_item.view.*
 import kotlinx.android.synthetic.main.fragment_edit_session.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -115,14 +115,17 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         GlobalScope.launch {
             val date = getDate()
             val spot = getSpot()
+            val season = getSeason(date)
+            // TODO: 17.11.20   
             var kiteSession: KiteSession?;
             if (currentSession==null){
-                kiteSession = KiteSession(0, date!!, spot!!)
+                kiteSession = KiteSession(0, date!!, spot!!,season)
                 mToKiteModel.insertKiteSession(kiteSession!!)
             }else{
                 kiteSession = currentSession!!
                 kiteSession.date = date!!
                 kiteSession.spot = spot!!
+                kiteSession.season = season!!
                 mToKiteModel.updateKiteSession(kiteSession!!)
             }
         }
@@ -131,6 +134,12 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 "writing ${getSpotName()}-session to the data-base.",
                 Toast.LENGTH_LONG
         ).show()
+    }
+
+    private fun getSeason(date: Date?): Season {
+        if (date == null) return Season.always
+        if (date.month > 10 || date.month < 5) return Season.winter
+        return Season.summer
     }
 
     private fun getDate(): Date? {

@@ -12,5 +12,6 @@ data class KiteSession(
         @PrimaryKey(autoGenerate = true)
         var id:Int,
         var date: Date,
-        var spot: Spot
+        var spot: Spot,
+        var season: Season
 ): Parcelable

@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteSession
 import com.nk.tokitelist.data.models.Season
-import com.nk.tokitelist.data.models.Spot
-import kotlinx.android.synthetic.main.row_layout.view.*
 import kotlinx.android.synthetic.main.session_row_layout.view.*
 import kotlinx.android.synthetic.main.session_row_layout.view.row_session_background
 import java.text.SimpleDateFormat
@@ -41,9 +39,14 @@ class SessionListAdapter: RecyclerView.Adapter<SessionListAdapter.MyViewHolder>(
             holder.itemView.findNavController().navigate(action)
         }
         // TODO: 17.11.20 introduce season for session and colorize accordingly 
-        when (dataList[position].spot) {
-            dataList[position].spot -> holder.itemView.row_session_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.cold))
+        when (dataList[position].season) {
+            Season.summer -> colorizeListItemAccordingToSeason(holder, R.color.hot)
+            Season.winter -> colorizeListItemAccordingToSeason(holder, R.color.cold)
         }
+    }
+
+    private fun colorizeListItemAccordingToSeason(holder: MyViewHolder, color: Int) {
+        holder.itemView.row_session_background.background.setTint(ContextCompat.getColor(holder.itemView.context, color))
     }
 
     override fun getItemCount(): Int {
