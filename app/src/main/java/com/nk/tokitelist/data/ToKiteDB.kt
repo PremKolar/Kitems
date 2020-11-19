@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.KiteSession
@@ -23,6 +24,13 @@ abstract class ToKiteDB: RoomDatabase() {
 
         @Volatile
         private var INSTANCE: ToKiteDB? = null
+
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE KiteSession ADD COLUMN name rating NOT NULL DEFAULT 3 ")
+            }
+        }
+
 
         fun getDataBase(context: Context): ToKiteDB{
             val tempInstance = INSTANCE
@@ -57,9 +65,6 @@ abstract class ToKiteDB: RoomDatabase() {
                         addKitem("Gloves",Season.winter,idx)
                     }
 
-//                override fun onOpen(db: SupportSQLiteDatabase) {
-//                    // do something every time database is open
-//                }
                 }
 
 
@@ -67,7 +72,7 @@ abstract class ToKiteDB: RoomDatabase() {
                         context.applicationContext,
                         ToKiteDB::class.java,
                         "kite_items_table"
-                ).addCallback(rdc).fallbackToDestructiveMigration().build()
+                ).addCallback(rdc).addMigrations(MIGRATION_1_2).build()
 
                 INSTANCE = instance
                 return instance
