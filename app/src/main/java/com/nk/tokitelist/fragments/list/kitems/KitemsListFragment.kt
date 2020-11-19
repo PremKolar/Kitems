@@ -47,7 +47,7 @@ class KitemsListFragment : Fragment() {
         restoreSeasonSelection()
         setUpToolbar()
         stylizeForGeneral()
-        return view
+        return inflatedView
     }
 
     private fun restoreSeasonSelection() {
@@ -171,6 +171,7 @@ class KitemsListFragment : Fragment() {
         var ans = data?.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.name })
         if (dir==-1) {
             ans = ans?.reversed()
+
         }
         return ans
     }

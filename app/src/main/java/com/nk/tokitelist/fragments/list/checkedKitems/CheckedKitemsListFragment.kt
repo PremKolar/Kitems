@@ -32,9 +32,27 @@ class CheckedKitemsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View?
     {
-
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_checked_list, container, false)
+        initRecyclerView(view)
+        setUpListeners()
+        setupToolbar(view)
+        return view
+    }
+
+    private fun setupToolbar(view: View) {
+        val toolbar: Toolbar = view.toolbar_checked_kitems_list as Toolbar
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setUpListeners() {
+        mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
+            triggerDataSetting(data)
+        })
+    }
+
+    private fun initRecyclerView(view: View) {
         val recyclerView = view.checkedRecyclerView
         recyclerView.itemAnimator = SlideInLeftAnimator().apply {
             addDuration = 300
@@ -44,14 +62,6 @@ class CheckedKitemsListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         swipeToCheck(recyclerView)
-
-        mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
-            triggerDataSetting(data)
-        })
-        val toolbar: Toolbar = view.toolbar_checked_kitems_list as Toolbar
-        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        return view
     }
 
     private fun triggerDataSetting(data: List<KiteItem>?) {
