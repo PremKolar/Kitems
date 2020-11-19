@@ -1,4 +1,4 @@
-package com.nk.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list.checkedKitems
 
 import android.os.Bundle
 import android.view.*
@@ -15,6 +15,8 @@ import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import com.nk.tokitelist.fragments.edit.SharedViewModel
+import com.nk.tokitelist.fragments.list.kitems.ListAdapter
+import com.nk.tokitelist.fragments.list.kitems.SwipeToCheck
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_checked_list.view.*
 
@@ -23,7 +25,7 @@ class CheckedKitemsListFragment : Fragment() {
 
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
-    private val adapter: ListAdapter by lazy { ListAdapter() }
+    private val adapter: CheckedListAdapter by lazy { CheckedListAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +68,7 @@ class CheckedKitemsListFragment : Fragment() {
     }
 
     private fun swipeToCheck(recyclerView: RecyclerView){
-        val swipeToCheckCallback = object :SwipeToCheck(){
+        val swipeToCheckCallback = object : SwipeToCheck(){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val kitemToUncheck = adapter.dataList[viewHolder.adapterPosition]
                 mToKiteViewModel.uncheckKitem(kitemToUncheck)

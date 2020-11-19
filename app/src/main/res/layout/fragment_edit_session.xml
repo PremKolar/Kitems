@@ -31,13 +31,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
+            <TextView
                 android:id="@+id/editTextTextPersonName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="when?" />
+                android:text="when?"
+                android:layout_margin="10dp"/>
 
             <DatePicker
                 android:id="@+id/datePickerForSession"
@@ -45,15 +45,16 @@
                 android:layout_height="149dp"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
-                android:headerBackground="@color/primary" />
+                android:headerBackground="@color/primary"
+                android:layout_margin="10dp"/>
 
 
-            <EditText
+            <TextView
                 android:id="@+id/editTextTextPersonName2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:layout_margin="10dp"
                 android:text="where?" />
 
             <Spinner
@@ -61,7 +62,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:paddingStart="20dp"
+                android:layout_margin="10dp"
                 android:paddingEnd="20dp" />
+
+            <TextView
+                android:id="@+id/editTextTextPersonName3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="10dp"
+                android:text="how?"/>
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/ratingBarInSessionEditor"
+                style="@style/Widget.AppCompat.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressTint="?colorAccent"
+                android:numStars="5"
+                android:stepSize="1"
+                android:visibility="visible"
+                android:layout_margin="10dp"
+                />
 
         </LinearLayout>
 

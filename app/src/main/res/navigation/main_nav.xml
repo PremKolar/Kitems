@@ -7,13 +7,16 @@
 
     <fragment
         android:id="@+id/checkedListFragment"
-        android:name="com.nk.tokitelist.fragments.list.CheckedKitemsListFragment"
+        android:name="com.nk.tokitelist.fragments.list.checkedKitems.CheckedKitemsListFragment"
         android:label="CheckedList"
         tools:layout="@layout/fragment_checked_list" >
+        <action
+            android:id="@+id/action_checkedListFragment_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.nk.tokitelist.fragments.list.KitemsListFragment"
+        android:name="com.nk.tokitelist.fragments.list.kitems.KitemsListFragment"
         android:label="List"
         tools:layout="@layout/fragment_kitems_list" >
         <action
@@ -50,7 +53,9 @@
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_right"/>
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/editSessionFragment"
@@ -65,7 +70,11 @@
             />
         <action
             android:id="@+id/action_editSessionFragment_to_sessionsOverviewFragment"
-            app:destination="@id/sessionsOverviewFragment" />
+            app:destination="@id/sessionsOverviewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment android:id="@+id/sessionsOverviewFragment"
@@ -75,6 +84,10 @@
         >
         <action
             android:id="@+id/action_sessionsOverviewFragment_to_editSessionFragment"
-            app:destination="@id/editSessionFragment" />
+            app:destination="@id/editSessionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 </navigation>

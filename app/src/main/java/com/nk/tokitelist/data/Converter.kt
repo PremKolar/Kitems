@@ -1,6 +1,7 @@
 package com.nk.tokitelist.data
 
 import androidx.room.TypeConverter
+import com.nk.tokitelist.data.models.Rating
 import com.nk.tokitelist.data.models.Season
 import com.nk.tokitelist.data.models.Spot
 import java.util.*
@@ -36,5 +37,20 @@ class Converter {
     fun toSpot(s: String?): Spot? {
         return s?.let { Spot(name = it) }
     }
+
+    @TypeConverter
+    fun fromRating(r: Rating?): Int {
+        if (r != null) {
+            return (r.ordinal)
+        }
+        return 0
+    }
+
+    @TypeConverter
+    fun toRating(i: Int?): Rating? {
+        return i?.let { Rating.fromInt(it) }
+    }
+
+
 
 }

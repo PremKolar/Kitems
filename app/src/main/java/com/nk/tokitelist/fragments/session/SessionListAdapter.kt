@@ -1,8 +1,6 @@
 package com.nk.tokitelist.fragments.session
-// TODO: 13.11.20 nightdaytheme 
-// TODO: 11.11.20 ratable session
-// TODO: 17.11.20 kitem in checlked list antipppen crashes 
-// TODO: 17.11.20 sessions in summer/winter farbe 
+// TODO: 18.11.20 name of app
+// TODO: 18.11.20 save DB on update 
 
 import android.view.LayoutInflater
 import android.view.View
@@ -38,11 +36,11 @@ class SessionListAdapter: RecyclerView.Adapter<SessionListAdapter.MyViewHolder>(
             val action = SessionOverviewFragmentDirections.actionSessionsOverviewFragmentToEditSessionFragment(dataList[position])
             holder.itemView.findNavController().navigate(action)
         }
-        // TODO: 17.11.20 introduce season for session and colorize accordingly 
         when (dataList[position].season) {
             Season.summer -> colorizeListItemAccordingToSeason(holder, R.color.hot)
             Season.winter -> colorizeListItemAccordingToSeason(holder, R.color.cold)
         }
+        holder.itemView.ratingBar.rating = dataList[position].rating.rat.toFloat()
     }
 
     private fun colorizeListItemAccordingToSeason(holder: MyViewHolder, color: Int) {
@@ -57,7 +55,7 @@ class SessionListAdapter: RecyclerView.Adapter<SessionListAdapter.MyViewHolder>(
         if (data != null) {
             this.dataList = data.toList()
         }else{
-            this.dataList = this.dataList.subList(0,0) // todo
+            this.dataList = this.dataList.subList(0,0)
         }
         notifyDataSetChanged()
     }

@@ -13,5 +13,6 @@ data class KiteSession(
         var id:Int,
         var date: Date,
         var spot: Spot,
-        var season: Season
+        var season: Season,
+        var rating: Rating = Rating.OK
 ): Parcelable

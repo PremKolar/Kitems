@@ -5,6 +5,7 @@
     <color name="secondary">#dcc800</color>
     <color name="colorSecondaryVariant">#547a96</color>
     <color name="accent">#d05d45</color>
+    <color name="accentDark">#d05d45</color>
     <color name="background">#e0e0e0</color>
     <color name="lightGray">#e4e4e4</color>
     <color name="truewhite">#FFFFFF</color>

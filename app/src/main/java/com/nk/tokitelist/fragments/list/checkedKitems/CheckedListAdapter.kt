@@ -1,4 +1,4 @@
-package com.nk.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list.checkedKitems
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
 import kotlinx.android.synthetic.main.row_layout.view.*
 
-class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class CheckedListAdapter: RecyclerView.Adapter<CheckedListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<KiteItem>()
 
@@ -27,7 +27,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemView.txt_name.text = dataList[position].name
         holder.itemView.row_background.setOnClickListener{
-            val action = KitemsListFragmentDirections.actionListFragmentToAddFragment(dataList[position])
+            val action = CheckedKitemsListFragmentDirections.actionCheckedListFragmentToAddFragment(dataList[position])
             holder.itemView.findNavController().navigate(action)
         }
 

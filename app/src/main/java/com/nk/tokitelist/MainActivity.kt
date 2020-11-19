@@ -1,5 +1,4 @@
 package com.nk.tokitelist
-// TODO: 12.11.20 animations missing
 
 import android.os.Bundle
 import android.view.MenuItem

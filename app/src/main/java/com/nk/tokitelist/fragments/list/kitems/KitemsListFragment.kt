@@ -1,4 +1,4 @@
-package com.nk.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list.kitems
 
 
 import android.content.Context
@@ -203,7 +203,7 @@ class KitemsListFragment : Fragment() {
     }
 
     private fun swipeToCheck(recyclerView: RecyclerView){
-        val swipeToCheckCallback = object :SwipeToCheck(){
+        val swipeToCheckCallback = object : SwipeToCheck(){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val itemToCheck = adapter.dataList[viewHolder.adapterPosition]
                 mToKiteViewModel.checkKitem(itemToCheck)

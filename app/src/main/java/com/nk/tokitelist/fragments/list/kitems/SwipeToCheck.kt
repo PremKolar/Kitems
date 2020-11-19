@@ -1,4 +1,4 @@
-package com.nk.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list.kitems
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

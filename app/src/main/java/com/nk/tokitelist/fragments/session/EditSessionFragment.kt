@@ -17,10 +17,12 @@ import androidx.navigation.fragment.navArgs
 import com.nk.tokitelist.R
 import com.nk.tokitelist.Tools
 import com.nk.tokitelist.data.models.KiteSession
+import com.nk.tokitelist.data.models.Rating
 import com.nk.tokitelist.data.models.Season
 import com.nk.tokitelist.data.models.Spot
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import kotlinx.android.synthetic.main.fragment_edit_session.view.*
+import kotlinx.android.synthetic.main.session_row_layout.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -69,15 +71,24 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         currentSession?.let { Tools.setSpinnerByValue(thisView.spinner_spots,it.spot.toString())  }
         currentSession?.date?.let { Tools.setDateSetterToDate(thisView.datePickerForSession, it) }
+        currentSession?.rating?.let { setRatingBarTo(it.rat) }
 
         val toolbar: Toolbar = thisView.toolbar_addEdit_session!!
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.title = "Edit Session"
 
-
+//
+//        thisView.ratingBarInSessionEditor.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+//            currentSession?.let {  }
+//        }
+//
         return thisView
 
+    }
+
+    private fun setRatingBarTo(rat: Int) {
+        thisView.ratingBarInSessionEditor.rating = rat.toFloat()
     }
 
     private fun toggleTrashBin() {
@@ -116,16 +127,17 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val date = getDate()
             val spot = getSpot()
             val season = getSeason(date)
-            // TODO: 17.11.20   
+            val rating = getRating()
             var kiteSession: KiteSession?;
             if (currentSession==null){
-                kiteSession = KiteSession(0, date!!, spot!!,season)
+                kiteSession = KiteSession(0, date!!, spot!!,season,rating)
                 mToKiteModel.insertKiteSession(kiteSession!!)
             }else{
                 kiteSession = currentSession!!
                 kiteSession.date = date!!
                 kiteSession.spot = spot!!
                 kiteSession.season = season!!
+                kiteSession.rating = rating!!
                 mToKiteModel.updateKiteSession(kiteSession!!)
             }
         }
@@ -136,9 +148,14 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         ).show()
     }
 
+    private fun getRating(): Rating {
+        val r = thisView.ratingBarInSessionEditor.rating.toInt()
+        return Rating.fromInt(r)
+    }
+
     private fun getSeason(date: Date?): Season {
         if (date == null) return Season.always
-        if (date.month > 10 || date.month < 5) return Season.winter
+        if (date.month > 9 || date.month < 5) return Season.winter
         return Season.summer
     }
 
