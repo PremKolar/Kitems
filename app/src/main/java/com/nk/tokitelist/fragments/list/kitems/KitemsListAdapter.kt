@@ -32,10 +32,19 @@ class KitemsListAdapter: RecyclerView.Adapter<KitemsListAdapter.MyViewHolder>() 
         }
 
         when (dataList[position].season) {
-            Season.summer -> holder.itemView.row_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.hot))
-            Season.winter -> holder.itemView.row_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.cold))
-            Season.always -> holder.itemView.row_background.background.setTint(ContextCompat.getColor(holder.itemView.context, R.color.allYear))
+            Season.summer -> setBackgroundColor(holder,R.color.hot)
+            Season.winter -> setBackgroundColor(holder, R.color.cold)
+            Season.always -> setBackgroundColor(holder, R.color.allYear)
         }
+    }
+
+    private fun setBackgroundColor(holder: MyViewHolder, color: Int) {
+        holder.itemView.row_background.background.setTint(
+            ContextCompat.getColor(
+                holder.itemView.context,
+                color
+            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -50,5 +59,4 @@ class KitemsListAdapter: RecyclerView.Adapter<KitemsListAdapter.MyViewHolder>() 
         }
         notifyDataSetChanged()
     }
-
 }

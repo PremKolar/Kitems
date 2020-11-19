@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_kitems_list.view.*
 
 class KitemsListFragment : Fragment() {
 
+    private lateinit var inflatedView: View
     private var sortMode: SortMode = SortMode.ALPHAASC
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
@@ -41,10 +42,57 @@ class KitemsListFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View?
     {
+        setUpListeners(inflater, container)
+        setHasOptionsMenu(true)
+        restoreSeasonSelection()
+        setUpToolbar()
+        stylizeForGeneral()
+        return view
+    }
 
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_kitems_list, container, false)
-        val recyclerView = view.kitemsListRecyclerView
+    private fun restoreSeasonSelection() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val s = sharedPref?.getString("sessionSeason", "always")
+        this.sessionSeason = mSharedViewModel.strToSeason(s)!!
+    }
+
+    private fun setUpToolbar() {
+        val toolbar: Toolbar = inflatedView.toolbar_kitems_list as Toolbar
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+    }
+
+    private fun setUpListeners(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) {
+        inflatedView = inflater.inflate(R.layout.fragment_kitems_list, container, false)
+        setUpRecyclerView()
+
+        inflatedView.button_logSession.setOnClickListener {
+            saveKiteSession()
+        }
+
+        inflatedView.floatingActionButton.setOnClickListener {
+            val nc = findNavController()
+            nc.navigate(R.id.action_listFragment_to_addFragment)
+        }
+
+        inflatedView.floatingActionButton_toCheckedList.setOnClickListener {
+            val nc = findNavController()
+            nc.navigate(R.id.action_listFragment_to_checkedListFragment)
+        }
+
+        mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
+            triggerDataSetting(data)
+        })
+
+        mSharedViewModel.dbIsEmpty.observe(viewLifecycleOwner, Observer {
+            showEmptyDB(mSharedViewModel.dbIsEmpty.value)
+        })
+    }
+
+    private fun setUpRecyclerView() {
+        val recyclerView = inflatedView.kitemsListRecyclerView
         recyclerView.itemAnimator = SlideInLeftAnimator().apply {
             addDuration = 200
             removeDuration = 200
@@ -54,54 +102,10 @@ class KitemsListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         swipeToCheck(recyclerView)
 
-        view.swipeRefreshList.setOnRefreshListener {
+        inflatedView.swipeRefreshList.setOnRefreshListener {
             resortList(recyclerView)
-            view.swipeRefreshList.isRefreshing = false
+            inflatedView.swipeRefreshList.isRefreshing = false
         }
-
-        view.button_logSession.setOnClickListener {
-            saveKiteSession()
-        }
-
-
-        mToKiteViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
-            triggerDataSetting(data)
-        })
-
-        mSharedViewModel.dbIsEmpty.observe(viewLifecycleOwner, Observer {
-            showEmptyDB(mSharedViewModel.dbIsEmpty.value)
-        })
-
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val s = sharedPref?.getString("sessionSeason", "always")
-        this.sessionSeason = mSharedViewModel.strToSeason(s)!!
-
-        view.floatingActionButton.setOnClickListener{
-            val nc =findNavController()
-            nc.navigate(R.id.action_listFragment_to_addFragment)
-        }
-
-        view.floatingActionButton_toCheckedList.setOnClickListener{
-            val nc =findNavController()
-            nc.navigate(R.id.action_listFragment_to_checkedListFragment)
-        }
-
-        // Set Menu
-        setHasOptionsMenu(true)
-//
-        val toolbar: Toolbar = view.toolbar_kitems_list as Toolbar
-        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-//        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-//        val col = ColorDrawable(ContextCompat.getColor(requireContext(), R.color.black))
-//        toolbar.setTitleTextColor(col);
-//        toolbar.setSubtitleTextColor(col);
-
-
-
-        stylizeForGeneral()
-
-
-        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

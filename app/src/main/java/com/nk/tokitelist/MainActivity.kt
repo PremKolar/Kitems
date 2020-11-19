@@ -15,26 +15,36 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private var navView: NavigationView? = null
+    private val MENU_IDX_FOR_NIGHTMODE = 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navView = findViewById(R.id.nav_view)
+        setUpNavigation()
+        setUpNightModeFeature()
+    }
+
+    private fun setUpNavigation() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView!!.setupWithNavController(navController)
         navView!!.setNavigationItemSelectedListener(this)
-        if (AppCompatDelegate.getDefaultNightMode() < 0){
+    }
+
+    private fun setUpNightModeFeature() {
+        if (AppCompatDelegate.getDefaultNightMode() < 0) {
             AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         }
-        val nightModeItem = navView!!.menu.getItem(2)
+        val nightModeItem = navView!!.menu.getItem(MENU_IDX_FOR_NIGHTMODE)
         nightModeItem.isCheckable = true
         nightModeItem.isChecked = true
         val navMenu = navView!!.menu
         val actionView = navMenu!!.findItem(R.id.switch_night_mode)!!.actionView!!.findViewById<View>(R.id.switch_item)
         actionView.setOnClickListener {
-            AppCompatDelegate.setDefaultNightMode((AppCompatDelegate.getDefaultNightMode()%2) +1)
+            AppCompatDelegate.setDefaultNightMode((AppCompatDelegate.getDefaultNightMode() % 2) + 1)
             recreate()
         }
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -43,13 +53,10 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean
     {
-
         drawer_layout.close()
-
         // this part checks if current fragment is the same as destination
         return if (findNavController(R.id.nav_host_fragment).currentDestination?.id != item.itemId)
         {
-
             val builder = when (item.title){
                 "Sessions" -> NavOptions.Builder()
                         .setLaunchSingleTop(true)
@@ -64,8 +71,6 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                         .setPopEnterAnim(R.anim.slide_in_up)
                         .setPopExitAnim(R.anim.slide_out_up)
             }
-
-
             val options = builder.build()
             return try
             {
