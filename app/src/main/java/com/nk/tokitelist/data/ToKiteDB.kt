@@ -64,9 +64,7 @@ abstract class ToKiteDB: RoomDatabase() {
                         idx = addKitem("Booties",Season.winter,idx)
                         addKitem("Gloves",Season.winter,idx)
                     }
-
                 }
-
 
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
