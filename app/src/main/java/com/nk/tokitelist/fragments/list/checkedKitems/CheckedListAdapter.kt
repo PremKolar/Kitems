@@ -1,4 +1,4 @@
-package com.nk.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list.checkedKitems
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,17 +6,14 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.nk.tokitelist.MainActivity
 import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
 import kotlinx.android.synthetic.main.row_layout.view.*
 
-class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class CheckedListAdapter: RecyclerView.Adapter<CheckedListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<KiteItem>()
-
-
 
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
@@ -30,7 +27,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemView.txt_name.text = dataList[position].name
         holder.itemView.row_background.setOnClickListener{
-            val action = ListFragmentDirections.actionListFragmentToAddFragment(dataList[position])
+            val action = CheckedKitemsListFragmentDirections.actionCheckedListFragmentToAddFragment(dataList[position])
             holder.itemView.findNavController().navigate(action)
         }
 
@@ -49,7 +46,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         if (data != null) {
             this.dataList = data
         }else{
-            this.dataList = this.dataList.subList(0,0) // todo
+            this.dataList = this.dataList.subList(0,0)
         }
         notifyDataSetChanged()
     }

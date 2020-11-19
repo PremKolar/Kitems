@@ -5,30 +5,20 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/listFragment">
 
-
-
-
-
     <fragment
         android:id="@+id/checkedListFragment"
-        android:name="com.nk.tokitelist.fragments.list.CheckedListFragment"
+        android:name="com.nk.tokitelist.fragments.list.checkedKitems.CheckedKitemsListFragment"
         android:label="CheckedList"
         tools:layout="@layout/fragment_checked_list" >
         <action
-            android:id="@+id/action_checkedListFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            />
+            android:id="@+id/action_checkedListFragment_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
-
-
-
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.nk.tokitelist.fragments.list.ListFragment"
+        android:name="com.nk.tokitelist.fragments.list.kitems.KitemsListFragment"
         android:label="List"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_kitems_list" >
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment"
@@ -43,20 +33,61 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_listFragment_to_editSessionFragment"
+            app:destination="@id/editSessionFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_up"
+            app:popEnterAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.nk.tokitelist.fragments.AddItemFragment"
         android:label="Add Item"
         tools:layout="@layout/fragment_add_item" >
+        <argument
+            android:name="currentKitem"
+            app:argType="com.nk.tokitelist.data.models.KiteItem" />
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_right"
-             />
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/editSessionFragment"
+        android:name="com.nk.tokitelist.fragments.session.EditSessionFragment"
+        android:label="Edit Session"
+        tools:layout="@layout/fragment_edit_session">
         <argument
-            android:name="currentKitem"
-            app:argType="com.nk.tokitelist.data.models.KiteItem" />
+            android:name="currentSession"
+            app:argType="com.nk.tokitelist.data.models.KiteSession"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
+        <action
+            android:id="@+id/action_editSessionFragment_to_sessionsOverviewFragment"
+            app:destination="@id/sessionsOverviewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment android:id="@+id/sessionsOverviewFragment"
+        android:name="com.nk.tokitelist.fragments.session.SessionOverviewFragment"
+        android:label="Sessions Overview"
+        tools:layout="@layout/fragment_session_overview"
+        >
+        <action
+            android:id="@+id/action_sessionsOverviewFragment_to_editSessionFragment"
+            app:destination="@id/editSessionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 </navigation>

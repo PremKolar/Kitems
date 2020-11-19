@@ -5,14 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.nk.tokitelist.data.models.KiteItem
+import com.nk.tokitelist.data.models.KiteSession
 import com.nk.tokitelist.data.models.Season
+import com.nk.tokitelist.data.models.Spot
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 
-@Database(entities = [KiteItem::class], version = 1, exportSchema = false)
+@Database(entities = [KiteItem::class, KiteSession::class, Spot::class], version = 2, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class ToKiteDB: RoomDatabase() {
     abstract fun toKiteDao():ToKiteDao
@@ -22,10 +25,14 @@ abstract class ToKiteDB: RoomDatabase() {
         @Volatile
         private var INSTANCE: ToKiteDB? = null
 
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE KiteSession ADD COLUMN name rating NOT NULL DEFAULT 3 ")
+            }
+        }
+
+
         fun getDataBase(context: Context): ToKiteDB{
-
-
-
             val tempInstance = INSTANCE
             if(tempInstance!=null){
                 return tempInstance
@@ -55,21 +62,15 @@ abstract class ToKiteDB: RoomDatabase() {
                         idx = addKitem("Surf Shorts",Season.summer,idx)
                         idx = addKitem("Hood",Season.winter,idx)
                         idx = addKitem("Booties",Season.winter,idx)
-                        idx = addKitem("Gloves",Season.winter,idx)
-
+                        addKitem("Gloves",Season.winter,idx)
                     }
-
-//                override fun onOpen(db: SupportSQLiteDatabase) {
-//                    // do something every time database is open
-//                }
                 }
-
 
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
                         ToKiteDB::class.java,
                         "kite_items_table"
-                ).addCallback(rdc).fallbackToDestructiveMigration().build()
+                ).addCallback(rdc).addMigrations(MIGRATION_1_2).build()
 
                 INSTANCE = instance
                 return instance

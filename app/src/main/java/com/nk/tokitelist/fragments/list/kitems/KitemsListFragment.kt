@@ -1,4 +1,5 @@
-package com.nk.tokitelist.fragments.list
+package com.nk.tokitelist.fragments.list.kitems
+
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
@@ -6,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,40 +23,44 @@ import com.nk.tokitelist.data.models.SortMode
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import com.nk.tokitelist.fragments.edit.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.fragment_list.view.*
+import kotlinx.android.synthetic.main.fragment_kitems_list.view.*
 
 
-class ListFragment : Fragment() {
+class KitemsListFragment : Fragment() {
 
     private var sortMode: SortMode = SortMode.ALPHAASC
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
-    private val adapter: ListAdapter by lazy { ListAdapter() }
+    private val adapterKitems: KitemsListAdapter by lazy { KitemsListAdapter() }
     var sessionSeason:Season = Season.always
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View?
     {
 
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_list, container, false)
-        val recyclerView = view.recyclerView
+        val view = inflater.inflate(R.layout.fragment_kitems_list, container, false)
+        val recyclerView = view.kitemsListRecyclerView
         recyclerView.itemAnimator = SlideInLeftAnimator().apply {
-            addDuration = 300
-            removeDuration = 300
-            changeDuration = 300
+            addDuration = 200
+            removeDuration = 200
+            changeDuration = 200
         }
-        recyclerView.adapter = adapter
+        recyclerView.adapter = adapterKitems
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         swipeToCheck(recyclerView)
 
         view.swipeRefreshList.setOnRefreshListener {
             resortList(recyclerView)
             view.swipeRefreshList.isRefreshing = false
+        }
+
+        view.button_logSession.setOnClickListener {
+            saveKiteSession()
         }
 
 
@@ -82,21 +88,46 @@ class ListFragment : Fragment() {
 
         // Set Menu
         setHasOptionsMenu(true)
+//
+        val toolbar: Toolbar = view.toolbar_kitems_list as Toolbar
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+//        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+//        val col = ColorDrawable(ContextCompat.getColor(requireContext(), R.color.black))
+//        toolbar.setTitleTextColor(col);
+//        toolbar.setSubtitleTextColor(col);
+
+
+
+        stylizeForGeneral()
+
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_fragment_menu, menu)
+    }
+
+
+    private fun saveKiteSession() {
+        findNavController().navigate(R.id.action_listFragment_to_editSessionFragment)
     }
 
     private fun resortList(recyclerView: RecyclerView?) {
         val values = enumValues<SortMode>()
         sortMode = values[(values.indexOf(sortMode) + 1) % values.size]
-        Toast.makeText(requireContext(), "Sort-mode: ${mSharedViewModel.sortModeToText(sortMode)}.", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+                requireContext(),
+                "Sort-mode: ${mSharedViewModel.sortModeToText(sortMode)}.",
+                Toast.LENGTH_LONG
+        ).show()
         triggerDataSetting(mToKiteViewModel.getAllData.value)
     }
 
     private fun triggerDataSetting(data: List<KiteItem>?) {
         var filteredData = filterData(data)
         filteredData = sortData(filteredData)
-        adapter.setData(filteredData)
+        adapterKitems.setData(filteredData)
         mSharedViewModel.checkIfDataIsEmpty(filteredData)
         when (sessionSeason){
             Season.summer -> stylizeForSummerSession()
@@ -107,12 +138,12 @@ class ListFragment : Fragment() {
 
     private fun sortData(data: List<KiteItem>?): List<KiteItem>? {
         return when (sortMode){
-            SortMode.ALPHAASC -> sortOnAlpha(data,1)
-            SortMode.ALPHADESC -> sortOnAlpha(data,-1)
-            SortMode.INDEXASC -> sortOnIndex(data,1)
-            SortMode.INDEXDESC -> sortOnIndex(data,-1)
-            SortMode.SEASONASC -> sortOnSeason(data,1)
-            SortMode.SEASONDESC -> sortOnSeason(data,-1)
+            SortMode.ALPHAASC -> sortOnAlpha(data, 1)
+            SortMode.ALPHADESC -> sortOnAlpha(data, -1)
+            SortMode.INDEXASC -> sortOnIndex(data, 1)
+            SortMode.INDEXDESC -> sortOnIndex(data, -1)
+            SortMode.SEASONASC -> sortOnSeason(data, 1)
+            SortMode.SEASONDESC -> sortOnSeason(data, -1)
         }
     }
 
@@ -155,13 +186,13 @@ class ListFragment : Fragment() {
         colorActionBar(R.color.hot)
     }
 
-    private fun colorActionBar(rcolor:Int) {
+    private fun colorActionBar(rcolor: Int) {
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    requireContext(), rcolor
+                ColorDrawable(
+                        ContextCompat.getColor(
+                                requireContext(), rcolor
+                        )
                 )
-            )
         )
     }
 
@@ -172,11 +203,11 @@ class ListFragment : Fragment() {
     }
 
     private fun swipeToCheck(recyclerView: RecyclerView){
-        val swipeToCheckCallback = object :SwipeToCheck(){
+        val swipeToCheckCallback = object : SwipeToCheck(){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemToCheck = adapter.dataList[viewHolder.adapterPosition]
+                val itemToCheck = adapterKitems.dataList[viewHolder.adapterPosition]
                 mToKiteViewModel.checkKitem(itemToCheck)
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                adapterKitems.notifyItemRemoved(viewHolder.adapterPosition)
 
                 Toast.makeText(requireContext(), "${itemToCheck.name} ✓", Toast.LENGTH_SHORT).show()
             }
@@ -184,36 +215,16 @@ class ListFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(swipeToCheckCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
-//
-//    private fun pullToSort(recyclerView: RecyclerView){
-//        val pullToSortCallback = object :PullToSort(){
-//            override fun onRefresh() {
-//
-//            }
-//        }
-//
-//        val swipeRefreshLayout = SwipeRefreshLayout()
-//
-//        itemTouchHelper.attachToRecyclerView(recyclerView)
-//    }
-
-
-
 
     private fun showEmptyDB(dbIsEmpty: Boolean?) {
         if (dbIsEmpty==null || dbIsEmpty) {
             view?.imageView_ready?.visibility = View.VISIBLE
-            view?.textView_ready?.visibility = View.VISIBLE
+            view?.button_logSession?.visibility = View.VISIBLE
         }else{
             view?.imageView_ready?.visibility = View.INVISIBLE
-            view?.textView_ready?.visibility = View.INVISIBLE
+            view?.button_logSession?.visibility = View.INVISIBLE
         }
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.list_fragment_menu, menu)
-    }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
