@@ -15,7 +15,6 @@ import com.nk.tokitelist.R
 import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
 import com.nk.tokitelist.fragments.edit.SharedViewModel
-import com.nk.tokitelist.fragments.list.kitems.ListAdapter
 import com.nk.tokitelist.fragments.list.kitems.SwipeToCheck
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_checked_list.view.*

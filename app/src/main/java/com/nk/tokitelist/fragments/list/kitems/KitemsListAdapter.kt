@@ -11,7 +11,7 @@ import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
 import kotlinx.android.synthetic.main.row_layout.view.*
 
-class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class KitemsListAdapter: RecyclerView.Adapter<KitemsListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<KiteItem>()
 

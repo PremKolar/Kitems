@@ -31,7 +31,7 @@ class KitemsListFragment : Fragment() {
     private var sortMode: SortMode = SortMode.ALPHAASC
     private val mToKiteViewModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
-    private val adapter: ListAdapter by lazy { ListAdapter() }
+    private val adapterKitems: KitemsListAdapter by lazy { KitemsListAdapter() }
     var sessionSeason:Season = Season.always
 
 
@@ -50,7 +50,7 @@ class KitemsListFragment : Fragment() {
             removeDuration = 200
             changeDuration = 200
         }
-        recyclerView.adapter = adapter
+        recyclerView.adapter = adapterKitems
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         swipeToCheck(recyclerView)
 
@@ -127,7 +127,7 @@ class KitemsListFragment : Fragment() {
     private fun triggerDataSetting(data: List<KiteItem>?) {
         var filteredData = filterData(data)
         filteredData = sortData(filteredData)
-        adapter.setData(filteredData)
+        adapterKitems.setData(filteredData)
         mSharedViewModel.checkIfDataIsEmpty(filteredData)
         when (sessionSeason){
             Season.summer -> stylizeForSummerSession()
@@ -205,9 +205,9 @@ class KitemsListFragment : Fragment() {
     private fun swipeToCheck(recyclerView: RecyclerView){
         val swipeToCheckCallback = object : SwipeToCheck(){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemToCheck = adapter.dataList[viewHolder.adapterPosition]
+                val itemToCheck = adapterKitems.dataList[viewHolder.adapterPosition]
                 mToKiteViewModel.checkKitem(itemToCheck)
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                adapterKitems.notifyItemRemoved(viewHolder.adapterPosition)
 
                 Toast.makeText(requireContext(), "${itemToCheck.name} ✓", Toast.LENGTH_SHORT).show()
             }

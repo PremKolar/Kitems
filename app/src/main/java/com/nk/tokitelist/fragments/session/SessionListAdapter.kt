@@ -1,6 +1,4 @@
 package com.nk.tokitelist.fragments.session
-// TODO: 18.11.20 name of app
-// TODO: 18.11.20 save DB on update 
 
 import android.view.LayoutInflater
 import android.view.View

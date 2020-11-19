@@ -11,12 +11,10 @@
     <color name="truewhite">#FFFFFF</color>
     <color name="primaryDark">#379065</color>
     <color name="backgroundDark">#272727</color>
-
-
     <color name="secondaryDark">#3d434a</color>
-    <color name="hot">#dcc800</color>
-    <color name="cold">#81C784</color>
-    <color name="allYear">#e7d5a6</color>
+    <color name="hot">#FF8A65</color>
+    <color name="cold">#81C7A2</color>
+    <color name="allYear">#5c5c5c</color>
     <color name="black">#1b1b1b</color>
     <color name="white">#eeebde</color>
 </resources>
