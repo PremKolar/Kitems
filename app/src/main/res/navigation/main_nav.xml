@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.nk.tokitelist.fragments.AddItemFragment"
+        android:name="com.nk.tokitelist.fragments.edit.EditKitemFragment"
         android:label="Add Item"
         tools:layout="@layout/fragment_add_item" >
         <argument

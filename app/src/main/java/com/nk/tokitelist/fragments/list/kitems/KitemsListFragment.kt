@@ -21,7 +21,7 @@ import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
 import com.nk.tokitelist.data.models.SortMode
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
-import com.nk.tokitelist.fragments.edit.SharedViewModel
+import com.nk.tokitelist.data.viewmodel.SharedViewModel
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.fragment_kitems_list.view.*
 

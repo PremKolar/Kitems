@@ -26,19 +26,22 @@ class SessionListAdapter: RecyclerView.Adapter<SessionListAdapter.MyViewHolder>(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemView.txt_session_name.text = dataList[position].spot.name
+        val kiteSession = dataList[position]
+        holder.itemView.txt_session_name.text = kiteSession.spot.name
         var formatter = SimpleDateFormat("EEE, dd-MM-yyyy")
-        val date = dataList[position].date
+        val date = kiteSession.date
         holder.itemView.txt_session_date.text =  formatter.format(date)
         holder.itemView.row_session_background.setOnClickListener{
-            val action = SessionOverviewFragmentDirections.actionSessionsOverviewFragmentToEditSessionFragment(dataList[position])
+            val action = SessionOverviewFragmentDirections.actionSessionsOverviewFragmentToEditSessionFragment(
+                kiteSession
+            )
             holder.itemView.findNavController().navigate(action)
         }
-        when (dataList[position].season) {
+        when (kiteSession.season) {
             Season.summer -> colorizeListItemAccordingToSeason(holder, R.color.hot)
             Season.winter -> colorizeListItemAccordingToSeason(holder, R.color.cold)
         }
-        holder.itemView.ratingBar.rating = dataList[position].rating.rat.toFloat()
+        holder.itemView.ratingBar.rating = kiteSession.rating.rat.toFloat()
     }
 
     private fun colorizeListItemAccordingToSeason(holder: MyViewHolder, color: Int) {

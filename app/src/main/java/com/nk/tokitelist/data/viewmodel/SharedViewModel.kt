@@ -1,4 +1,4 @@
-package com.nk.tokitelist.fragments.edit
+package com.nk.tokitelist.data.viewmodel
 
 import android.app.Application
 import android.view.View
@@ -24,10 +24,14 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
             AdapterView.OnItemSelectedListener{
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             when(position){
-                0 -> {(parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application,R.color.cold))}
-                1 -> {(parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application,R.color.hot))}
-                2 -> {(parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.allYear))}
+                0 -> {colorizeMenuBar(parent, R.color.cold)}
+                1 -> {colorizeMenuBar(parent, R.color.hot)}
+                2 -> {colorizeMenuBar(parent, R.color.allYear)}
             }
+        }
+
+        private fun colorizeMenuBar(parent: AdapterView<*>?, color: Int) {
+            (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, color))
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -64,6 +68,4 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
             SortMode.INDEXDESC -> "# added ↑"
         }
     }
-
-
 }

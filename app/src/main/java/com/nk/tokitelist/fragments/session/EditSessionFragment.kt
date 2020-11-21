@@ -40,20 +40,45 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val mToKiteModel: ToKiteViewModel by viewModels()
     private lateinit var thisView: View
     private val args by navArgs<EditSessionFragmentArgs>()
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         thisView = inflater.inflate(R.layout.fragment_edit_session, container, false)
-
         setHasOptionsMenu(true)
+        setUpListeners()
+        fillUIcomponentsWithCurrentSessionFromArgs()
+        setupToolbar()
+        return thisView
+    }
 
+    private fun setupToolbar() {
+        val toolbar: Toolbar = thisView.toolbar_addEdit_session!!
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.title = "Edit Session"
+    }
+
+    private fun fillUIcomponentsWithCurrentSessionFromArgs() {
+        currentSession = if (args.currentSession == null) {
+            null
+        } else {
+            args.currentSession
+        }
+
+        currentSession?.let { Tools.setSpinnerByValue(thisView.spinner_spots, it.spot.toString()) }
+        currentSession?.date?.let { Tools.setDateSetterToDate(thisView.datePickerForSession, it) }
+        currentSession?.rating?.let { setRatingBarTo(it.rat) }
+    }
+
+    private fun setUpListeners() {
         thisView.spinner_spots!!.onItemSelectedListener = this
 
-        thisView?.add_session_floatingActionButton.setOnClickListener{
+        thisView?.add_session_floatingActionButton.setOnClickListener {
             saveCurrentSession()
-            val nc =findNavController()
+            val nc = findNavController()
             nc.navigate(R.id.action_editSessionFragment_to_sessionsOverviewFragment)
         }
 
@@ -61,30 +86,7 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
             updateSpotsSpinner(data)
         })
 
-        this.onCurrentSessionChanged = {old,new -> toggleTrashBin() }
-
-        currentSession = if (args.currentSession == null){
-            null
-        }else{
-            args.currentSession
-        }
-
-        currentSession?.let { Tools.setSpinnerByValue(thisView.spinner_spots,it.spot.toString())  }
-        currentSession?.date?.let { Tools.setDateSetterToDate(thisView.datePickerForSession, it) }
-        currentSession?.rating?.let { setRatingBarTo(it.rat) }
-
-        val toolbar: Toolbar = thisView.toolbar_addEdit_session!!
-        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.title = "Edit Session"
-
-//
-//        thisView.ratingBarInSessionEditor.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-//            currentSession?.let {  }
-//        }
-//
-        return thisView
-
+        this.onCurrentSessionChanged = { old, new -> toggleTrashBin() }
     }
 
     private fun setRatingBarTo(rat: Int) {
@@ -94,7 +96,6 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun toggleTrashBin() {
         deleteSessionButton?.let { it.setVisible(currentSession != null)}
     }
-
 
     private fun updateSpotsSpinner(data: Array<String>) {
         val aa = activity?.let {
@@ -173,8 +174,6 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return thisView.spinner_spots.selectedItem.toString();
     }
 
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.add_new_spot -> addNewSpot()
@@ -194,7 +193,6 @@ class EditSessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         mToKiteModel.deleteSession(currentSession!!)
         currentSession = null
     }
-
 
     private fun addNewSpot() {
         val builder = AlertDialog.Builder(

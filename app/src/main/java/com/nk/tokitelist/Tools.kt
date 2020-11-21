@@ -7,13 +7,8 @@ import java.util.*
 
 class Tools {
 
-
     companion object {
-        /**
-         *
-         * @param datePicker
-         * @return a java.util.Date
-         */
+
         fun getDateFromDatePicker(datePicker: DatePicker): Date? {
             val day = datePicker.dayOfMonth
             val month = datePicker.month

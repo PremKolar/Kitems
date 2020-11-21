@@ -25,10 +25,29 @@ class SessionOverviewFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        setHasOptionsMenu(true)
-
         // Inflate the layout for this fragment
         thisView = inflater.inflate(R.layout.fragment_session_overview, container, false)
+        setHasOptionsMenu(true)
+        setupRecyclerView()
+        setupListeners()
+        setupToolbar()
+        return thisView
+    }
+
+    private fun setupToolbar() {
+        val toolbar: Toolbar = thisView.toolbar_sessions_overview!!
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.title = "Session"
+    }
+
+    private fun setupListeners() {
+        mToKiteModel.getAllSession.observe(viewLifecycleOwner, Observer { data ->
+            adapter.setData(data)
+        })
+    }
+
+    private fun setupRecyclerView() {
         val recyclerView = thisView.sessionListRecyclerView
         recyclerView.itemAnimator = SlideInLeftAnimator().apply {
             addDuration = 300
@@ -37,18 +56,6 @@ class SessionOverviewFragment : Fragment() {
         }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-
-        mToKiteModel.getAllSession.observe(viewLifecycleOwner, Observer { data ->
-            adapter.setData(data)
-        })
-
-        val toolbar: Toolbar = thisView.toolbar_sessions_overview!!
-        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.title = "Session"
-
-
-        return thisView
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
