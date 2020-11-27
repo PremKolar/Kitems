@@ -177,7 +177,6 @@ class KitemsListFragment : Fragment() {
     }
 
 
-
     private fun stylizeForGeneral() {
         (activity as AppCompatActivity).supportActionBar?.title = "Kitems"
         colorActionBar(R.color.primary)
