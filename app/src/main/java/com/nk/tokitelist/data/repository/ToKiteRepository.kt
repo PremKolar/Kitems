@@ -12,7 +12,7 @@ class ToKiteRepository(private val toKiteDao: ToKiteDao) {
     val getAllSpotNames: LiveData<Array<String>> = toKiteDao.getAllSpotNames()
 
 
-    suspend fun insertData(kiteItem: KiteItem){
+    suspend fun insertKitem(kiteItem: KiteItem){
         kiteItem.checked = false
         kiteItem.addedIdx = getMaxIndex()+1
         toKiteDao.insertData(kiteItem)

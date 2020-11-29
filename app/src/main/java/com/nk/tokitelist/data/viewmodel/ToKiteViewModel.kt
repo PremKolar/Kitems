@@ -34,7 +34,7 @@ class ToKiteViewModel(application: Application):AndroidViewModel(application) {
     }
 
     fun insertKitem(kiteItem: KiteItem){
-        viewModelScope.launch(Dispatchers.IO) { repository.insertData(kiteItem) }
+        viewModelScope.launch(Dispatchers.IO) { repository.insertKitem(kiteItem) }
     }
 
     fun deleteKitem(name: String) {

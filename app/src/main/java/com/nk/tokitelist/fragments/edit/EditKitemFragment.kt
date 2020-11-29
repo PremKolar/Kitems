@@ -15,7 +15,6 @@ import com.nk.tokitelist.data.models.KiteItem
 import com.nk.tokitelist.data.models.Season
 import com.nk.tokitelist.data.viewmodel.SharedViewModel
 import com.nk.tokitelist.data.viewmodel.ToKiteViewModel
-import com.nk.tokitelist.fragments.AddItemFragmentArgs
 import kotlinx.android.synthetic.main.fragment_add_item.*
 import kotlinx.android.synthetic.main.fragment_add_item.view.*
 import java.lang.Exception
@@ -28,7 +27,7 @@ class EditKitemFragment : Fragment() {
     private val mToKiteModel: ToKiteViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
 
-    private val args by navArgs<AddItemFragmentArgs>()
+    private val args by navArgs<EditKitemFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
